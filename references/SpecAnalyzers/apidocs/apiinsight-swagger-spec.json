@@ -1,0 +1,5932 @@
+{
+ "consumes": [
+  "application/json"
+ ],
+ "produces": [
+  "application/json"
+ ],
+ "swagger": "2.0",
+ "info": {
+  "description": "API Insights is an open-source tool that helps developers improve API quality and security.",
+  "title": "API Insights",
+  "contact": {
+   "name": "Ask API Insights",
+   "email": "ask-api-insights@cisco.com"
+  },
+  "license": {
+   "name": "Apache 2.0",
+   "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+  }
+ },
+ "host": "0.0.0.0:8081",
+ "basePath": "/v1",
+ "paths": {
+  "/v1/apiregistry/analyzers": {
+   "get": {
+    "description": "List all analyzers with specified tags.",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "list",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "starting offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "max items to return at one time",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": 100,
+      "description": "max",
+      "name": "max",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "searching criteria for analyzers",
+      "name": "q",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "tags for getting analyzers",
+      "name": "tags",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "analyzer status, e.g. active",
+      "name": "status",
+      "in": "query"
+     },
+     {
+      "type": "boolean",
+      "description": "flag indicating if rules should be included, by default false",
+      "name": "withRules",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "csv fields for sorting",
+      "name": "sort",
+      "in": "query"
+     },
+     {
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "type": "string",
+      "default": "asc",
+      "description": "sorting order: asc(default), desc",
+      "name": "order",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/analyzer.Analyzer"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Link": {
+        "type": "string",
+        "description": "Link"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "description": "Create a new analyzer",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "save",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "analyzer",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/analyzer.Analyzer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Analyzer"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "201": {
+      "description": "Created",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Analyzer"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/analyzers/{id}": {
+   "get": {
+    "description": "Get a analyzer with specified id",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "get",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Analyzer"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "description": "Update existing analyzer",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "save",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "analyzer",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/analyzer.Analyzer"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Analyzer"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "description": "Delete existing analyzer",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "delete",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/analyzers/{id}/rules": {
+   "get": {
+    "description": "List all analyzer rules with specified tags.",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "listRules",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "starting offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "max items to return at one time",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": 100,
+      "description": "max",
+      "name": "max",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "searching criteria for analyzers",
+      "name": "q",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "tags for getting analyzers",
+      "name": "tags",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer rule.",
+      "name": "name_id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "csv fields for sorting",
+      "name": "sort",
+      "in": "query"
+     },
+     {
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "type": "string",
+      "default": "asc",
+      "description": "sorting order: asc(default), desc",
+      "name": "order",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/analyzer.Rule"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Link": {
+        "type": "string",
+        "description": "Link"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "description": "Create a new analyzer rule",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "saveRule",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "analyzer rule",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/analyzer.Rule"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Rule"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "201": {
+      "description": "Created",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Rule"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/analyzers/{id}/rules/import": {
+   "post": {
+    "description": "Import a list of analyzer rules",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "importRules",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "analyzer rules",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/analyzer.Rule"
+       }
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/analyzers/{id}/rules/{ruleID}": {
+   "get": {
+    "description": "Get a analyzer rule with specified id",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "getRule",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer rule.",
+      "name": "ruleID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Rule"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "description": "Update existing analyzer rule",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "saveRule",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "analyzer rule",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/analyzer.Rule"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer rule.",
+      "name": "ruleID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/analyzer.Rule"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "description": "Delete existing analyzer rule",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "analyzer"
+    ],
+    "operationId": "deleteRule",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for analyzer rule.",
+      "name": "ruleID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/info": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "info"
+    ],
+    "summary": "Get server info",
+    "operationId": "getInfo",
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Info"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/organizations": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "organization"
+    ],
+    "summary": "List all organizations with specified tags.",
+    "operationId": "list",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "searching criteria for organizations",
+      "name": "q",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "tags for getting organizations",
+      "name": "tags",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "starting offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "max items to return at one time",
+      "name": "limit",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/models.Organization"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "organization"
+    ],
+    "summary": "Create a new organization",
+    "operationId": "save",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.Organization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Organization"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "201": {
+      "description": "Created",
+      "schema": {
+       "$ref": "#/definitions/models.Organization"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/organizations/{id}": {
+   "get": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "organization"
+    ],
+    "summary": "Get a organization with specified id",
+    "operationId": "get",
+    "parameters": [
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for organization.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Organization"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "organization"
+    ],
+    "summary": "Update existing organization",
+    "operationId": "save",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.Organization"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for organization.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Organization"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "organization"
+    ],
+    "summary": "Delete existing organization",
+    "operationId": "delete",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for organization.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "organization"
+    ],
+    "summary": "Patch existing organization",
+    "operationId": "patch",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/models.OrganizationPatch"
+       }
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for organization.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Organization"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services": {
+   "get": {
+    "description": "List all services with specified tags.",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "service"
+    ],
+    "operationId": "list",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "starting offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "max items to return at one time",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": 100,
+      "description": "max",
+      "name": "max",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "searching criteria for services",
+      "name": "q",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "tags for getting services",
+      "name": "tags",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "csv fields for sorting",
+      "name": "sort",
+      "in": "query"
+     },
+     {
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "type": "string",
+      "default": "asc",
+      "description": "sorting order: asc(default), desc",
+      "name": "order",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/models.Service"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Link": {
+        "type": "string",
+        "description": "Link"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "description": "Create a new service",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "service"
+    ],
+    "operationId": "save",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "service",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.Service"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Service"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "201": {
+      "description": "Created",
+      "schema": {
+       "$ref": "#/definitions/models.Service"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}": {
+   "get": {
+    "description": "Get a service with specified id",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "service"
+    ],
+    "operationId": "get",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Service"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "put": {
+    "description": "Update existing service",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "service"
+    ],
+    "operationId": "save",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "service",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.Service"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Service"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "description": "Delete existing service",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "service"
+    ],
+    "operationId": "delete",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "description": "Patch existing service",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "service"
+    ],
+    "operationId": "patch",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "service",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.ServicePatch"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.ServicePatch"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs": {
+   "get": {
+    "description": "List all service specs with specified tags.",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "listSpecs",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "starting offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "max items to return at one time",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": 100,
+      "description": "max",
+      "name": "max",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "searching criteria for service specs",
+      "name": "q",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "tags for getting service specs",
+      "name": "tags",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "boolean",
+      "default": false,
+      "description": "flag indicating if doc should be included, by default false",
+      "name": "withDoc",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "csv fields for sorting",
+      "name": "sort",
+      "in": "query"
+     },
+     {
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "type": "string",
+      "default": "asc",
+      "description": "sorting order: asc(default), desc",
+      "name": "order",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/models.Spec"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Link": {
+        "type": "string",
+        "description": "Link"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "description": "Create a new service spec",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "saveSpec",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "spec",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.Spec"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Spec"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs/analyses": {
+   "get": {
+    "description": "List all the service analyses (reports)",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "getServiceAnalyses",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "starting offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "max items to return at one time",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": 100,
+      "description": "max",
+      "name": "max",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier for service spec.",
+      "name": "specID",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "boolean",
+      "default": false,
+      "description": "flag indicating if result findings should be included, by default false",
+      "name": "withFindings",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "csv fields for sorting",
+      "name": "sort",
+      "in": "query"
+     },
+     {
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "type": "string",
+      "default": "asc",
+      "description": "sorting order: asc(default), desc",
+      "name": "order",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/models.SpecAnalysis"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Link": {
+        "type": "string",
+        "description": "Link"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs/diff": {
+   "post": {
+    "description": "Create a service spec diff",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "createDiff",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "spec diff request",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.SpecDiffRequest"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.SpecDiff"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "201": {
+      "description": "Created",
+      "schema": {
+       "$ref": "#/definitions/models.SpecDiff"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Location": {
+        "type": "string",
+        "description": "Location"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs/diff/{oldSpecID}/{newSpecID}": {
+   "get": {
+    "description": "Create a service spec diff",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json",
+     "text/markdown"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "getOrCreateDiff",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "old spec ID",
+      "name": "oldSpecID",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "new spec ID",
+      "name": "newSpecID",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "default": "json",
+      "description": "format of spec diff result",
+      "name": "format",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "type": "integer"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs/reconstruct": {
+   "post": {
+    "description": "Reconstruct a new service spec",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "reconstructSpec",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Spec"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs/{specID}": {
+   "get": {
+    "description": "Get a service spec with specified id",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "getSpec",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier for service spec.",
+      "name": "specID",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "boolean",
+      "default": false,
+      "description": "flag indicating if doc should be included, by default false",
+      "name": "withDoc",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.Spec"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "description": "Delete existing service spec",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "deleteSpec",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier for service spec.",
+      "name": "specID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No Content",
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs/{specID}/analyses": {
+   "get": {
+    "description": "Get the service spec analyses (report)",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "getAnalyses",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "starting offset",
+      "name": "offset",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "max items to return at one time",
+      "name": "limit",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "default": 100,
+      "description": "max",
+      "name": "max",
+      "in": "query"
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier for service spec.",
+      "name": "specID",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "csv fields for sorting",
+      "name": "sort",
+      "in": "query"
+     },
+     {
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "type": "string",
+      "default": "asc",
+      "description": "sorting order: asc(default), desc",
+      "name": "order",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "array",
+       "items": {
+        "$ref": "#/definitions/models.SpecAnalysis"
+       }
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "Link": {
+        "type": "string",
+        "description": "Link"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "description": "Create a new service spec analysis",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "createAnalysis",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "spec analysis request",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.SpecAnalysisRequest"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier for service spec.",
+      "name": "specID",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.SpecAnalysisResponse"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/services/{id}/specs/{specID}/doc": {
+   "get": {
+    "description": "Get a service spec doc with specified id",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json",
+     "text/plain"
+    ],
+    "tags": [
+     "spec"
+    ],
+    "operationId": "getSpecDoc",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier (UUID or Name ID) for service.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "string",
+      "description": "unique identifier for service spec.",
+      "name": "specID",
+      "in": "path",
+      "required": true
+     },
+     {
+      "type": "boolean",
+      "default": true,
+      "description": "flag indicating if response content is to be served as a downloadable attachment (Content-Disposition), by default true",
+      "name": "download",
+      "in": "query"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "type": "string"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/specs/analyses/analyze": {
+   "post": {
+    "description": "Create a new spec analysis",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "stateless"
+    ],
+    "operationId": "analyze",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "spec analysis request",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.SpecAnalysisRequest"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.SpecAnalysisResponse"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/apiregistry/specs/diffs/diff": {
+   "post": {
+    "description": "Perform a stateless spec diff",
+    "consumes": [
+     "application/json",
+     "multipart/form-data"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "stateless"
+    ],
+    "operationId": "performDiff",
+    "parameters": [
+     {
+      "type": "string",
+      "default": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InRpdGxlIjoiIiwiZGlzcGxheU5hbWUiOiIiLCJmaXJzdE5hbWUiOiIiLCJsYXN0TmFtZSI6IiIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJyb2xlIjoiIn0sInBlcm1zIjpbeyJjb21wYW55IjoiKiIsImRvbWFpbiI6IioiLCJyb2xlIjoiKiIsInVzZXIiOiIqIn1dfQ.IUa6OHlYquw-8k5YPYEVNc9US-LPl9Rt7Fms960MDTk",
+      "description": "authorization header",
+      "name": "Authorization",
+      "in": "header",
+      "required": true
+     },
+     {
+      "description": "spec diff request",
+      "name": "body",
+      "in": "body",
+      "required": true,
+      "schema": {
+       "$ref": "#/definitions/models.SpecDiffRequest"
+      }
+     },
+     {
+      "type": "string",
+      "description": "unique identifier for specDiff.",
+      "name": "id",
+      "in": "path",
+      "required": true
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/models.SpecDiff"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/healthz": {
+   "get": {
+    "description": "Returns the health status of the service",
+    "consumes": [
+     "application/json"
+    ],
+    "produces": [
+     "application/json"
+    ],
+    "tags": [
+     "health"
+    ],
+    "operationId": "getHealth",
+    "responses": {
+     "200": {
+      "description": "OK",
+      "schema": {
+       "$ref": "#/definitions/endpoints.healthCheck"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "401": {
+      "description": "Unauthorized",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "403": {
+      "description": "Forbidden",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "schema": {
+       "$ref": "#/definitions/restful.ServiceError"
+      },
+      "headers": {
+       "Date": {
+        "type": "string",
+        "description": "Date"
+       },
+       "TrackingID": {
+        "type": "string",
+        "description": "TrackingID"
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "definitions": {
+  "analyzer.Analyzer": {
+   "required": [
+    "name_id",
+    "title",
+    "description",
+    "status",
+    "meta",
+    "config",
+    "created_at",
+    "updated_at",
+    "position",
+    "rules"
+   ],
+   "properties": {
+    "config": {
+     "type": "object"
+    },
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "meta": {
+     "type": "string"
+    },
+    "name_id": {
+     "type": "string"
+    },
+    "position": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "rules": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/analyzer.Rule"
+     }
+    },
+    "status": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "analyzer.Config": {
+   "type": "object"
+  },
+  "analyzer.Finding": {
+   "required": [
+    "type",
+    "path"
+   ],
+   "properties": {
+    "diff": {
+     "$ref": "#/definitions/analyzer.FindingDiff"
+    },
+    "path": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "range": {
+     "$ref": "#/definitions/analyzer.FindingPositionRange"
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "analyzer.FindingDiff": {
+   "required": [
+    "old",
+    "new"
+   ],
+   "properties": {
+    "new": {
+     "type": "string"
+    },
+    "old": {
+     "type": "string"
+    }
+   }
+  },
+  "analyzer.FindingPosition": {
+   "required": [
+    "line",
+    "column"
+   ],
+   "properties": {
+    "column": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "line": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "analyzer.FindingPositionRange": {
+   "required": [
+    "start",
+    "end"
+   ],
+   "properties": {
+    "end": {
+     "$ref": "#/definitions/analyzer.FindingPosition"
+    },
+    "start": {
+     "$ref": "#/definitions/analyzer.FindingPosition"
+    }
+   }
+  },
+  "analyzer.Findings": {
+   "required": [
+    "message",
+    "mitigation",
+    "data"
+   ],
+   "properties": {
+    "data": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/analyzer.Finding"
+     }
+    },
+    "message": {
+     "type": "string"
+    },
+    "mitigation": {
+     "type": "string"
+    }
+   }
+  },
+  "analyzer.Result": {
+   "required": [
+    "summary",
+    "findings",
+    "severityRuleCache"
+   ],
+   "properties": {
+    "findings": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/analyzer.RuleFindings"
+     }
+    },
+    "severityRuleCache": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/analyzer.Result.severityRuleCache"
+     }
+    },
+    "summary": {
+     "$ref": "#/definitions/analyzer.ResultSummary"
+    }
+   }
+  },
+  "analyzer.Result.severityRuleCache": {
+   "type": "object",
+   "additionalProperties": {
+    "$ref": "#/definitions/analyzer.Rule"
+   }
+  },
+  "analyzer.ResultSummary": {
+   "required": [
+    "stats"
+   ],
+   "properties": {
+    "stats": {
+     "$ref": "#/definitions/analyzer.SeverityRuleFindingsStats"
+    }
+   }
+  },
+  "analyzer.Rule": {
+   "required": [
+    "name_id",
+    "analyzer_name_id",
+    "title",
+    "description",
+    "severity",
+    "mitigation",
+    "meta",
+    "created_at",
+    "updated_at"
+   ],
+   "properties": {
+    "analyzer_name_id": {
+     "type": "string"
+    },
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "meta": {
+     "type": "string"
+    },
+    "mitigation": {
+     "type": "string"
+    },
+    "name_id": {
+     "type": "string"
+    },
+    "severity": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "analyzer.RuleFindings": {
+   "required": [
+    "rules"
+   ],
+   "properties": {
+    "rules": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/analyzer.Findings"
+     }
+    }
+   }
+  },
+  "analyzer.RuleFindingsStats": {
+   "required": [
+    "count",
+    "occurrences",
+    "rules"
+   ],
+   "properties": {
+    "count": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "occurrences": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "rules": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "integer"
+     }
+    }
+   }
+  },
+  "analyzer.SeverityRuleFindingsStats": {
+   "required": [
+    "count",
+    "occurrences",
+    "hint",
+    "info",
+    "warning",
+    "error"
+   ],
+   "properties": {
+    "count": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "error": {
+     "$ref": "#/definitions/analyzer.RuleFindingsStats"
+    },
+    "hint": {
+     "$ref": "#/definitions/analyzer.RuleFindingsStats"
+    },
+    "info": {
+     "$ref": "#/definitions/analyzer.RuleFindingsStats"
+    },
+    "occurrences": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "warning": {
+     "$ref": "#/definitions/analyzer.RuleFindingsStats"
+    }
+   }
+  },
+  "diff.Config": {
+   "properties": {
+    "output_format": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.EndpointSummary": {
+   "required": [
+    "path",
+    "method",
+    "description",
+    "message"
+   ],
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "method": {
+     "type": "string"
+    },
+    "path": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.JSONResult": {
+   "required": [
+    "added",
+    "deleted",
+    "deprecated",
+    "modified",
+    "breaking",
+    "message"
+   ],
+   "properties": {
+    "added": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.EndpointSummary"
+     }
+    },
+    "breaking": {
+     "type": "boolean"
+    },
+    "deleted": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.EndpointSummary"
+     }
+    },
+    "deprecated": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.EndpointSummary"
+     }
+    },
+    "message": {
+     "type": "string"
+    },
+    "modified": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.ModifiedSummary"
+     }
+    }
+   }
+  },
+  "diff.ModifiedSummary": {
+   "required": [
+    "old",
+    "new",
+    "path",
+    "method",
+    "summary",
+    "description",
+    "breaking",
+    "message",
+    "parameters",
+    "requestBody",
+    "responses",
+    "security"
+   ],
+   "properties": {
+    "breaking": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "method": {
+     "type": "string"
+    },
+    "new": {
+     "type": "string"
+    },
+    "old": {
+     "type": "string"
+    },
+    "parameters": {
+     "$ref": "#/definitions/diff.ParametersSummary"
+    },
+    "path": {
+     "type": "string"
+    },
+    "requestBody": {
+     "$ref": "#/definitions/diff.RequestBodySummary"
+    },
+    "responses": {
+     "$ref": "#/definitions/diff.ResponsesSummary"
+    },
+    "security": {
+     "$ref": "#/definitions/diff.SecuritySummary"
+    },
+    "summary": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.ParameterSummary": {
+   "required": [
+    "name",
+    "in",
+    "description",
+    "deprecated",
+    "breaking",
+    "action",
+    "message"
+   ],
+   "properties": {
+    "action": {
+     "type": "string"
+    },
+    "breaking": {
+     "type": "boolean"
+    },
+    "deprecated": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "in": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.ParametersSummary": {
+   "required": [
+    "breaking",
+    "message",
+    "details"
+   ],
+   "properties": {
+    "breaking": {
+     "type": "boolean"
+    },
+    "details": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.ParameterSummary"
+     }
+    },
+    "message": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.PropertiesSummary": {
+   "required": [
+    "name",
+    "type",
+    "description",
+    "action",
+    "breaking",
+    "message",
+    "properties"
+   ],
+   "properties": {
+    "action": {
+     "type": "string"
+    },
+    "breaking": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "properties": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.PropertiesSummary"
+     }
+    },
+    "type": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.RequestBodySummary": {
+   "required": [
+    "breaking",
+    "message",
+    "description",
+    "details"
+   ],
+   "properties": {
+    "breaking": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "details": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.RequestBodySummaryDetail"
+     }
+    },
+    "message": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.RequestBodySummaryDetail": {
+   "required": [
+    "properties",
+    "breaking",
+    "action",
+    "message",
+    "name"
+   ],
+   "properties": {
+    "action": {
+     "type": "string"
+    },
+    "breaking": {
+     "type": "boolean"
+    },
+    "message": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "properties": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.PropertiesSummary"
+     }
+    }
+   }
+  },
+  "diff.ResponseSummaryDetail": {
+   "required": [
+    "description",
+    "name",
+    "action",
+    "breaking",
+    "message",
+    "properties"
+   ],
+   "properties": {
+    "action": {
+     "type": "string"
+    },
+    "breaking": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "message": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "properties": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.PropertiesSummary"
+     }
+    }
+   }
+  },
+  "diff.ResponsesSummary": {
+   "required": [
+    "breaking",
+    "message",
+    "details"
+   ],
+   "properties": {
+    "breaking": {
+     "type": "boolean"
+    },
+    "details": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.ResponsesSummaryDetail"
+     }
+    },
+    "message": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.ResponsesSummaryDetail": {
+   "required": [
+    "details",
+    "name",
+    "description",
+    "action",
+    "breaking",
+    "message"
+   ],
+   "properties": {
+    "action": {
+     "type": "string"
+    },
+    "breaking": {
+     "type": "boolean"
+    },
+    "description": {
+     "type": "string"
+    },
+    "details": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.ResponseSummaryDetail"
+     }
+    },
+    "message": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.Result": {
+   "properties": {
+    "html": {
+     "type": "string"
+    },
+    "json": {
+     "$ref": "#/definitions/diff.JSONResult"
+    },
+    "markdown": {
+     "type": "string"
+    },
+    "text": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.SecuritySummary": {
+   "required": [
+    "breaking",
+    "message",
+    "details"
+   ],
+   "properties": {
+    "breaking": {
+     "type": "boolean"
+    },
+    "details": {
+     "type": "array",
+     "items": {
+      "$ref": "#/definitions/diff.SecuritySummaryDetail"
+     }
+    },
+    "message": {
+     "type": "string"
+    }
+   }
+  },
+  "diff.SecuritySummaryDetail": {
+   "required": [
+    "breaking",
+    "name",
+    "action",
+    "message"
+   ],
+   "properties": {
+    "action": {
+     "type": "string"
+    },
+    "breaking": {
+     "type": "boolean"
+    },
+    "message": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "endpoints.healthCheck": {
+   "required": [
+    "Status"
+   ],
+   "properties": {
+    "Status": {
+     "type": "string"
+    }
+   }
+  },
+  "models.AnalyzerConfigMap": {
+   "type": "object",
+   "additionalProperties": {
+    "$ref": "#/definitions/analyzer.Config"
+   }
+  },
+  "models.AuthInfo": {
+   "required": [
+    "enabled"
+   ],
+   "properties": {
+    "enabled": {
+     "type": "boolean"
+    }
+   }
+  },
+  "models.Info": {
+   "required": [
+    "auth"
+   ],
+   "properties": {
+    "auth": {
+     "$ref": "#/definitions/models.AuthInfo"
+    }
+   }
+  },
+  "models.Organization": {
+   "required": [
+    "name_id",
+    "title",
+    "description",
+    "meta",
+    "contact",
+    "created_at",
+    "updated_at",
+    "roles"
+   ],
+   "properties": {
+    "contact": {
+     "type": "string"
+    },
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "meta": {
+     "type": "string"
+    },
+    "name_id": {
+     "type": "string"
+    },
+    "roles": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/models.Roles.roles"
+     }
+    },
+    "title": {
+     "type": "string"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "models.OrganizationPatch": {
+   "required": [
+    "name_id",
+    "title",
+    "description",
+    "meta",
+    "contact",
+    "Roles"
+   ],
+   "properties": {
+    "Roles": {
+     "$ref": "#/definitions/models.Roles"
+    },
+    "contact": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "meta": {
+     "type": "string"
+    },
+    "name_id": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    }
+   }
+  },
+  "models.Roles": {
+   "required": [
+    "roles",
+    "roles"
+   ],
+   "properties": {
+    "roles": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/models.Roles.roles"
+     }
+    }
+   }
+  },
+  "models.Roles.roles": {
+   "type": "object",
+   "additionalProperties": {
+    "$ref": "#/definitions/models.Roles.roles.value"
+   }
+  },
+  "models.Roles.roles.value": {},
+  "models.Service": {
+   "required": [
+    "additional_info",
+    "contact",
+    "description",
+    "name_id",
+    "organization_id",
+    "product_tag",
+    "title",
+    "visibility",
+    "created_at",
+    "updated_at",
+    "summary"
+   ],
+   "properties": {
+    "additional_info": {
+     "type": "string"
+    },
+    "analyzers_configs": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/analyzer.Config"
+     }
+    },
+    "contact": {
+     "type": "string"
+    },
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "name_id": {
+     "type": "string"
+    },
+    "organization_id": {
+     "type": "string"
+    },
+    "product_tag": {
+     "type": "string"
+    },
+    "summary": {
+     "$ref": "#/definitions/models.ServiceSummary"
+    },
+    "title": {
+     "type": "string"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "visibility": {
+     "type": "string"
+    }
+   }
+  },
+  "models.ServicePatch": {
+   "required": [
+    "additional_info",
+    "contact",
+    "description",
+    "name_id",
+    "organization_id",
+    "product_tag",
+    "title",
+    "analyzers_configs",
+    "visibility"
+   ],
+   "properties": {
+    "additional_info": {
+     "type": "string"
+    },
+    "analyzers_configs": {
+     "$ref": "#/definitions/models.AnalyzerConfigMap"
+    },
+    "contact": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "name_id": {
+     "type": "string"
+    },
+    "organization_id": {
+     "type": "string"
+    },
+    "product_tag": {
+     "type": "string"
+    },
+    "title": {
+     "type": "string"
+    },
+    "visibility": {
+     "type": "string"
+    }
+   }
+  },
+  "models.ServiceSummary": {
+   "required": [
+    "score",
+    "version",
+    "revision",
+    "updated_at"
+   ],
+   "properties": {
+    "revision": {
+     "type": "string"
+    },
+    "score": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "version": {
+     "type": "string"
+    }
+   }
+  },
+  "models.Spec": {
+   "required": [
+    "doc",
+    "doc_type",
+    "revision",
+    "score",
+    "service_id",
+    "state",
+    "valid",
+    "version",
+    "created_at",
+    "updated_at"
+   ],
+   "properties": {
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "doc": {
+     "type": "string"
+    },
+    "doc_type": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string"
+    },
+    "revision": {
+     "type": "string"
+    },
+    "score": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "service_id": {
+     "type": "string"
+    },
+    "state": {
+     "type": "string"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "valid": {
+     "type": "string"
+    },
+    "version": {
+     "type": "string"
+    }
+   }
+  },
+  "models.SpecAnalysis": {
+   "required": [
+    "analyzer",
+    "result",
+    "score",
+    "service_id",
+    "spec_id",
+    "status",
+    "created_at",
+    "updated_at"
+   ],
+   "properties": {
+    "analyzer": {
+     "type": "string"
+    },
+    "config": {
+     "type": "object"
+    },
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "id": {
+     "type": "string"
+    },
+    "result": {
+     "$ref": "#/definitions/analyzer.Result"
+    },
+    "score": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "service_id": {
+     "type": "string"
+    },
+    "spec_id": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "models.SpecAnalysisConfig": {
+   "properties": {
+    "config": {
+     "type": "object"
+    }
+   }
+  },
+  "models.SpecAnalysisRequest": {
+   "required": [
+    "analyzers"
+   ],
+   "properties": {
+    "analyzers": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "analyzers_configs": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/analyzer.Config"
+     }
+    },
+    "service": {
+     "$ref": "#/definitions/models.Service"
+    },
+    "spec": {
+     "$ref": "#/definitions/models.Spec"
+    }
+   }
+  },
+  "models.SpecAnalysisResponse": {
+   "required": [
+    "spec_score"
+   ],
+   "properties": {
+    "results": {
+     "type": "object",
+     "additionalProperties": {
+      "$ref": "#/definitions/models.SpecAnalysis"
+     }
+    },
+    "spec_score": {
+     "type": "integer",
+     "format": "int32"
+    }
+   }
+  },
+  "models.SpecAnalysisResult": {
+   "required": [
+    "result"
+   ],
+   "properties": {
+    "result": {
+     "$ref": "#/definitions/analyzer.Result"
+    }
+   }
+  },
+  "models.SpecDiff": {
+   "required": [
+    "SpecDiffRequest",
+    "result",
+    "created_at",
+    "updated_at"
+   ],
+   "properties": {
+    "SpecDiffRequest": {
+     "$ref": "#/definitions/models.SpecDiffRequest"
+    },
+    "created_at": {
+     "type": "string",
+     "format": "date-time"
+    },
+    "id": {
+     "type": "string"
+    },
+    "result": {
+     "$ref": "#/definitions/diff.Result"
+    },
+    "service_id": {
+     "type": "string"
+    },
+    "status": {
+     "type": "string"
+    },
+    "updated_at": {
+     "type": "string",
+     "format": "date-time"
+    }
+   }
+  },
+  "models.SpecDiffConfig": {
+   "properties": {
+    "config": {
+     "$ref": "#/definitions/diff.Config"
+    }
+   }
+  },
+  "models.SpecDiffRequest": {
+   "properties": {
+    "config": {
+     "$ref": "#/definitions/diff.Config"
+    },
+    "new_spec_doc": {
+     "type": "string"
+    },
+    "new_spec_id": {
+     "type": "string"
+    },
+    "old_spec_doc": {
+     "type": "string"
+    },
+    "old_spec_id": {
+     "type": "string"
+    }
+   }
+  },
+  "models.SpecDiffResult": {
+   "required": [
+    "result"
+   ],
+   "properties": {
+    "result": {
+     "$ref": "#/definitions/diff.Result"
+    }
+   }
+  },
+  "restful.ServiceError": {
+   "required": [
+    "Code",
+    "Message",
+    "Header"
+   ],
+   "properties": {
+    "Code": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "Header": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     }
+    },
+    "Message": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "securityDefinitions": {
+  "jwt": {
+   "description": "jwt token",
+   "type": "apiKey",
+   "name": "Authorization",
+   "in": "header"
+  }
+ },
+ "externalDocs": {
+  "description": "Visit API Insights",
+  "url": "https://developer.cisco.com/site/api-insights/"
+ }
+}

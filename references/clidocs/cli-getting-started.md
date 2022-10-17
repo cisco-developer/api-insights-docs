@@ -1,0 +1,102 @@
+## API Insights CLI (api-insights-cli) Overview
+
+The `api-insights-cli` command-line utility allows you to analyze and score a spec file in your local environment. The local CLI utility does not require you to start an API Insights service or interface with a Git repository.
+
+## Prerequisites
+
+* The `api-insights-cli` utility itself. Download the appropriate API Insights CLI utility file for your operating system and architecture:
+ https://github.com/cisco-developer/api-insights/releases
+* If running API Insight locally using helm chart, expose APIs at ```http://localhost:8081/v1/apiregistry``` using below command
+  ```
+  kubectl -n api-insights port-forward svc/api-insights 8081:80
+  ```
+* A spec file in your local environment. If you do not have a local spec file on hand, you can download a sample Petstore OpenAPI 3 spec file by running the following command:
+
+  ```shell
+  wget https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json
+  ```
+
+## Setting Up the API Insights CLI
+
+### Setting Up the CLI on Windows
+
+To run the CLI on Windows, download the `api-insights-cli` file from the appropriate source, then add the file's location to your PATH variable and run it from the command line as `api-insights-cli`.
+
+### Setting Up the CLI on MacOS
+
+To run the CLI on Mac, download the `api-insights-cli` file from the appropriate source, then do the following:
+
+1. Change the file's permissions by running `chmod a+x [path to file]` where [path to file] is the path to the `api-insights-cli` file, including the filename.
+1. Add the file to your PATH variable. In MacOS versions before 10.15 (Catalina), your PATH variable is stored in either `.bashrc` or `.bash_profile`. In version 10.15 and later, the PATH variable is stored in `.zshrc` or `.zsh_profile`.
+1. Run the CLI from the command line as `api-insights-cli`.
+>> Note Depending on you laptop's security setting, you may need to run ```xattr -d com.apple.quarantine api-insights-cli``` this command to allow new downloaded binary to be executed. 
+   
+
+## How to Evaluate/Score a Local OAS File
+
+To run all of the API Insights analyzers on a local spec file, run the following:
+
+```shell
+`api-insights-cli analyze [filepath]`
+```
+
+To run only a specific analyzer on a local spec file, add the flag `--analyzer` followed by one of the following (NOTE: drift is visible if optional APIClarity is configured):
+
+* `guidelines`
+* `completeness`
+* `inclusive-language`
+* `drift`
+
+API Insights returns the analysis report as output in your console. The final score summary at the end of the report looks like the following:
+
+```
+  #  SEVERITY  CODE  FINDINGS  RECOMMENDATION  AFFECTED ITEMS
+0 Findings (0 Error, 0 Warning, 0 Info, 0 Hint)
+
+  # |      ANALYZER      | SCORE | ERROR | WARNING | INFO | HINT
+----+--------------------+-------+-------+---------+------+-------
+  2 | Completeness       |    80 |     2 |       0 |    0 |    0
+  3 | Drift              |   100 |     0 |       0 |    0 |    0
+  4 | REST Guidelines    |    93 |     6 |       4 |    1 |    1
+  5 | Inclusive Language |   100 |     0 |       0 |    0 |    0
+
+API Score: 90
+```
+
+By default, the spec fails the analysis if its score is **0**. To set the score that should be considered "failing", add the tag `--fail-below-score` followed by the integer score.
+
+## How to Compare Two OAS Files
+
+If you have an API Insights remote service with at least one API spec on it, you can use the API Insights CLI to compare a local version of that spec to one of the versions on the remote service.
+
+To compare a local spec file to the **latest version** that is currently on the remote service, run the following:
+
+```
+api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --latest
+```
+
+To compare a local spec file to a **specific version** of the spec on the remote service, run the following:
+
+```
+apregistryctl diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING
+```
+
+To compare a local spec file to a specific version and revision of the spec on the remote service, run the following:
+
+```
+api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING --revision REVISION_STRING
+```
+
+To set any of these diff analyses to fail if they detect changes that break backwards compatibility, add the **--fail-on-incompatible** flag to the command.
+
+### SEE ALSO
+
+* [api-insights-cli analyze](api-insights-cli_analyze.md)	 - Analyze local API spec
+* [api-insights-cli analyzer](api-insights-cli_analyzer.md)	 - Manage analyzers
+* [api-insights-cli analyzer-rule](api-insights-cli_analyzer-rule.md)	 - Manage analyzer rules
+* [api-insights-cli diff](api-insights-cli_diff.md)	 - Diff local and remote API specs
+* [api-insights-cli service](api-insights-cli_service.md)	 - Manage services and related specs
+* [api-insights-cli spec](api-insights-cli_spec.md)	 - Manage specs
+* [api-insights-cli spec-analysis](api-insights-cli_spec-analysis.md)	 - Manage spec analyses
+
+###### Auto generated by spf13/cobra on 19-Aug-2022

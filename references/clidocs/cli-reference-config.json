@@ -1,0 +1,92 @@
+{
+    "items": [
+        {
+            "title": "Getting Started with the API Insights CLI",
+            "content": "cli-getting-started.md"
+        },
+        {
+            "title": "API Insights CLI (apiinsights) Overview ",
+            "content": "api-insights-cli.md"
+        },
+        {
+            "title": "Service",
+            "content": "api-insights-cli_service.md"
+        },
+        {
+            "title": "Service Create",
+            "content": "api-insights-cli_service_create.md"
+        },
+        {
+            "title": "Service List",
+            "content": "api-insights-cli_service_list.md"
+        },
+        {
+            "title": "Service Get",
+            "content": "api-insights-cli_service_get.md"
+        },
+        {
+            "title": "Service Delete",
+            "content": "api-insights-cli_service_delete.md"
+        },
+        {
+            "title": "Service Upload Spec",
+            "content": "api-insights-cli_service_uploadspec.md"
+        },
+        {
+            "title": "Spec Analysis",
+            "content": "api-insights-cli_spec-analysis.md"
+        },
+        {
+            "title": "Spec Analysis List",
+            "content": "api-insights-cli_spec-analysis_list.md"
+        },
+        {
+            "title": "Spec Diff",
+            "content": "api-insights-cli_diff.md"
+        },
+        {
+            "title": "Spec",
+            "content": "api-insights-cli_spec.md"
+        },
+        {
+            "title": "Spec List",
+            "content": "api-insights-cli_spec_list.md"
+        },
+        {
+            "title": "Spec Get",
+            "content": "api-insights-cli_spec_get.md"
+        },
+        {
+            "title": "Spec Analyze",
+            "content": "api-insights-cli_analyze.md"
+        },
+        {
+            "title": "Analyzer",
+            "content": "api-insights-cli_analyzer.md"
+        },
+        {
+            "title": "Analyzer List",
+            "content": "api-insights-cli_analyzer_list.md"
+        },
+        {
+            "title": "Analyzer Get",
+            "content": "api-insights-cli_analyzer_get.md"
+        },
+        {
+            "title": "Analyzer Rule",
+            "content": "api-insights-cli_analyzer-rule.md"
+        },
+        {
+            "title": "Analyzer Rule List",
+            "content": "api-insights-cli_analyzer-rule_list.md"
+        },
+        {
+            "title": "Analyser Rule Get",
+            "content": "api-insights-cli_analyzer-rule_get.md"
+        },
+        {
+            "title": "Analyzer Rule Import",
+            "content": "api-insights-cli_analyzer-rule_import.md"
+        }
+    ]
+}

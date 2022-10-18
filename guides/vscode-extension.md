@@ -4,8 +4,6 @@ API Insights is available as an extension for Visual Studio Code. The extension 
 
 ## Prerequisites
 * Install Visual Studio Code from [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download).
-<!-- replaceme-extension -->
-* Download the API Insights extension from [https://static.production.devnetcloud.com/libs/api-insights/stable](https://static.production.devnetcloud.com/libs/api-insights/stable).
 
 ## Installation and Configuration
 

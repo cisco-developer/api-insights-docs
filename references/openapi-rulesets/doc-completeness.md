@@ -29,7 +29,7 @@ The Documentation Completeness Ruleset consists of 2 domains:
 | general-schema-definition                | Some schemas are partially defined.                                       | error    | Please fully describe the schema for the items detected as using object. [Reference](#general-schema-definatio-generic-schema-definition)                                                                                                          |
 | oas[2/3]-missing-returned-representation | Some responses do not define a schema.                                    | error    | Please add a schema for the items detected. [Reference](#oas2-3-missing-returned-representation-missing-returned-representation)                                                                                                                   |
 | success-status-code                      | Some operations do not define a success status code.                      | error    | Please add a success status code in the 1xx, 2xx or 3xx range for the items identified. [Reference](#success-status-code-missing-success-status-code)                                                                                              |
-| error-status-code                        | Some operations do not define errors.                                     | warning  | Please add an error status code for the items identified. [Reference](#error-status-code-missing-error-status-codes-there-should-be-at-least-one-error-status-code-either-4xx-or-5xx-or-default-per-the-openapi-spec--search-for-default-response) |
+| error-status-code                        | Some operations do not define errors.                                     | warning  | Please add an error status code for the items identified. [Reference](#error-status-code-missing-error-status-code) |
 | description-for-every-attribute          | Some attributes do not provide a description.                             | warning  | Please add a description for the items identified. [Reference](#description-for-every-attribute-descriptions-for-every-attribute)                                                                                                                  |
 | examples-for-every-schema                | Examples are not provided for some of the schemas.                        | warning  | Please add examples for the schemas identified. [Reference](#examples-for-every-schemaexamples-for-every-schema)                                                                                                                                   |
 
@@ -93,9 +93,9 @@ List of that are implemented for this check.
 
 - A successful status code is in the 1xx, 2xx or 3xx range series, and generally a 200, 201 or 204. Missing response schema object properties.
 
-### error-status-code:  Missing Error Status Codes There should be at least one error status code either 4xx or 5xx (or default per the OpenAPI spec / search for Default Response)
+### error-status-code:  Missing Error Status Code
 
-- Example here: there are no error codes, only 200 OK https://wwwin-github.cisco.com/stsfartz/oas_docs/blob/master/threatresponse/raw/iroh-enrich.20220324.json#L6698
+- There should be at least one error status code either 4xx or 5xx (or default per the OpenAPI spec / search for Default Response)
 
 
 

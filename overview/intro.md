@@ -29,7 +29,7 @@ Developers often lament another common issue: a lack of consistent documentation
 
 ## What Works With API Insights?
 
-API Insights leverages [API Clarity](https://apiclarity.io) to analyze API drift. This allows API Insights to identify Zombie and Shadow APIs on currently-running services. A Zombie API is an API that has been deprecated and should no longer be be running on the service. A Shadow API is an API path that is not documented, but is still working on a service. Either of these can pose security and backwards compatibility risks.
+API Insights leverages [APIClarity](https://apiclarity.io) to analyze API drift. This allows API Insights to identify Zombie and Shadow APIs on currently-running services. A Zombie API is an API that has been deprecated and should no longer be be running on the service. A Shadow API is an API path that is not documented, but is still working on a service. Either of these can pose security and backwards compatibility risks.
 
 ## How Does API Insights Work? 
 ![API Insights](../images/API-Insights-Solution-Diagram.png)

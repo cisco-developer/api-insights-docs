@@ -13,13 +13,13 @@ API Insights is available as an extension for Visual Studio Code. The extension 
     Method 1:
     1. In Visual Studio Code, click the **Extensions** button.
        ![The Extensions button in Visual Studio Code.](/images/extension-button.PNG)
-    2. On the Extensions panel, input "api insights" in the text box and press enter.
+    2. On the Extensions panel, enter "api insights" in the search field and press **Enter**.
        ![Search result page in VSCode](/images/extension-api-insights-in-srp.png)
-    3. Select "API Insights" in search results(scroll down if "API Insights" is not visible in the list).
+    3. In the search results, select _API Insights_.
 
     Method 2:
-    1. Open link https://marketplace.visualstudio.com/items?itemName=CiscoDeveloper.api-insights in browser.
-    2. Click ![Install Button](/images/extension-install-marketplace.png)
+    1. Navigate to the extension on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=CiscoDeveloper.api-insights) in browser.
+    2. Click the **Install** button to install the extension.
     3. Click **Open Visual Studio Code**
 
 2. Click **Install** button in extension detail page.

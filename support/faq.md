@@ -10,6 +10,18 @@ Visit the [APIClarity Official site](https://apiclarity.io) to get more details.
 
 ## Frequently Asked Questions (FAQ)
 
+### Q: Do I need an OpenAPI spec file in order to use API Insights?
+
+**A:** Yes, but the spec file can be in JSON or YAML format.
+
+### Q: If I do not have an OpenAPI spec file for my service, can I still use API Insights?
+
+**A:** Yes, you can set up API Clarity and use it to generate an OpenAPI spec file based on your API's traffic.
+
+### Q: What prerequisites do I need to set up in order to use API Clarity?
+
+**A:** API Clarity performs runtime traffic analysis, so you need to set up an agent to capture data from the service mesh (such as [Istio](https://istio.io/)) or API Gateway (such as [Kong](https://konghq.com/).
+
 ### Q: How do I analyze my OpenAPI Specification (OAS) file?
 
 **A**: You can analyze an API spec file in three ways:

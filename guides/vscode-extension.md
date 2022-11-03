@@ -4,18 +4,25 @@ API Insights is available as an extension for Visual Studio Code. The extension 
 
 ## Prerequisites
 * Install Visual Studio Code from [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download).
-<!-- replaceme-extension -->
-* Download the API Insights extension from [https://static.production.devnetcloud.com/libs/api-insights/stable](https://static.production.devnetcloud.com/libs/api-insights/stable).
 
 ## Installation and Configuration
 
 ### Installing the API Insights Extension
 
-1. In Visual Studio Code, click the **Extensions** button.
-   ![The Extensions button in Visual Studio Code.](/images/extension-button.PNG)
-1. On the Extensions panel, click the ellipsis, then select **Install from VSIX**.
-   ![The option to install an extension from a .vsix file.](/images/extension-install-vsix.png)
-1. Browse to and select the .vsix file that you downloaded, then click **Install**.
+1. Choose one of these two methods to find API Insights Extension:
+    Method 1:
+    1. In Visual Studio Code, click the **Extensions** button.
+       ![The Extensions button in Visual Studio Code.](/images/extension-button.PNG)
+    2. On the Extensions panel, enter "api insights" in the search field and press **Enter**.
+       ![Search result page in VSCode](/images/extension-api-insights-in-srp.png)
+    3. In the search results, select _API Insights_.
+
+    Method 2:
+    1. Navigate to the extension on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=CiscoDeveloper.api-insights) in your browser.
+    2. Click the **Install** button to install the extension.
+    3. Click **Open Visual Studio Code**
+
+2. Click the **Install** button on the extension's Details page.
 
 When the installation is complete, the extension will appear in the list of extensions as shown below, and the API Insights icon will appear in the left sidebar.
 

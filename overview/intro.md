@@ -29,7 +29,7 @@ Developers often lament another common issue: a lack of consistent documentation
 
 ## What Works With API Insights?
 
-API Insights leverages [API Clarity](https://apiclarity.io) to analyze API drift. This allows API Insights to identify Zombie and Shadow APIs on currently-running services. A Zombie API is an API that has been deprecated and should no longer be be running on the service. A Shadow API is an API path that is not documented, but is still working on a service. Either of these can pose security and backwards compatibility risks.
+API Insights leverages [APIClarity](https://apiclarity.io) to analyze API drift. This allows API Insights to identify Zombie and Shadow APIs on currently-running services. A Zombie API is an API that has been deprecated and should no longer be be running on the service. A Shadow API is an API path that is not documented, but is still working on a service. Either of these can pose security and backwards compatibility risks.
 
 ## How Does API Insights Work? 
 ![API Insights](../images/API-Insights-Solution-Diagram.png)
@@ -39,7 +39,7 @@ API Insights stores its analysis information and reports remotely and presents i
 A typical API Insights workflow might look something like the following:
 
 1. Author your API spec file locally.
-1. Use either the [API Insights extension](../guides/vscode-extension.md) for Visual Studio Code or the [API Insights local CLI](../references/clidocs/apiregistryctl.md) to analyze your spec file. Both of these options allow you to analyze a local spec file and view analysis information from the API Insights remote service. Iterate on your local spec file to raise its scores before you commit it to your repository.
+1. Use either the [API Insights extension](../guides/vscode-extension.md) for Visual Studio Code or the [API Insights local CLI](../references/clidocs/api-insights-cli.md) to analyze your spec file. Both of these options allow you to analyze a local spec file and view analysis information from the API Insights remote service. Iterate on your local spec file to raise its scores before you commit it to your repository.
 1. Commit your spec file to a GitHub repository which has been configured to run [API Insights in a CI/CD pipeline](../guides/cicd-setup-guide.md). Create a GitHub release tag to trigger the API Insights analyzers and differentiate the new version of the spec file from previous versions. API Insights runs its analyzers on your spec file as GitHub actions, and passes the results into the API Insights dashboard. You can also analyze a spec file in the following ways:
    1. Upload your spec file directly to the API Insights dashboard UI.
    1. Run the local API Insights CLI to analyze the spec file in your local environment.

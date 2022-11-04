@@ -31,7 +31,12 @@ Another common issue which developers encounter is a lack of consistent document
 
 API Insights leverages [APIClarity](https://apiclarity.io) to analyze API drift. This allows API Insights to identify Zombie and Shadow APIs on currently running services. A Zombie API is an API that has been deprecated and should no longer be running on the service. A Shadow API is an API path that is not documented, but is still working on a service. Either of these can pose security and backwards compatibility risks.
 
-## How Does API Insights Work? 
+## How Does API Insights Work?
+
+The overall solution flow of API Insights is as follows:
+
+![Solution flow diagram for API Insights](/images/solutionFlow.svg)
+
 API Insights stores its analysis information remotely and presents its data through a browser-based dashboard. From the API Insights dashboard, you can view analysis scores and reports, download specific versions of spec files, see diff reports, and more. You can analyze a spec file by committing it to a GitHub repository that has been configured to run API Insights in its CI/CD pipeline, by uploading it to the API Insights dashboard UI, or by using the local CLI.
 
 Although the API Insights workflow contains multiple entry points, the overall flow looks something like the following:

@@ -38,7 +38,7 @@ This section proposes best practices and recommendations to apply consistent RES
 
 REST operations must use the appropriate HTTP methods (aka verbs) whenever possible.
 
-Below is a list of methods that API resources may support. 
+Below is a list of methods that API resources may support.
 _Note that your API and its resources do not need to support every method listed._
 
 | Method  | Description |
@@ -60,7 +60,7 @@ _Note that your API and its resources do not need to support every method listed
 > SME Review: GET requests have no (apparent) effect on the state of resources.
 <!-- recostop -->
 
-The GET verb is be used for retrieving representational state from a resource. 
+The GET verb is be used for retrieving representational state from a resource.
 
 Such a request must have no apparent affect on the state of the resource.  However, side effects may include incidental changes in state of the server, other resources, or client-invisible fields of the target resource itself, as might be expected in cases where view counts or client metrics are being tracked.
 
@@ -143,7 +143,7 @@ If your API offers [action resources](#action-resources), HTTP status may also b
 
 The PUT verb may be used in any case where a client requests the complete replacement of a resource.  The request contains a full representation of the replacement resource.
 
-A PUT operation should provide a `200 OK` status code and include a full representation of the updated object. 
+A PUT operation should provide a `200 OK` status code and include a full representation of the updated object.
 
 Optionally, `204 No Content` is possible if no representation is returned.
 
@@ -202,7 +202,7 @@ A successful DELETE response should provide a HTTP `204 No Content` status code.
 > SME Review: Representations for PATCH requests are formatted as JSON Merge Patch (RFC-7396).
 <!-- recostop -->
 
-The PATCH verb may be used for submitting partial updates to a resource.  
+The PATCH verb may be used for submitting partial updates to a resource.
 
 In general, replacing a complete object via PUT will be the main (simplest) approach for object state modification, however there may be optimization scenarios where allowing partial updates can save bandwidth/processing resources, or could help with concurrency (multiple clients updating an object in race conditions.)
 
@@ -270,14 +270,14 @@ HTTP/1.1 200 OK
 > Linter Rule: API.REST.STYLE.patch-200-204-success: PATCH operations return either '200 OK' with full representation or '204 No Content'.
 <!-- recostop -->
 
-A successful PATCH response would typically return a HTTP `200 OK` status code and include the updated object's full representation in the body; 
+A successful PATCH response would typically return a HTTP `200 OK` status code and include the updated object's full representation in the body;
 
 However it is also acceptable to return `204 No Content` with no body.
 
 <br/>
 [(_INVESTIGATING_)](../introduction.md#classes-of-recommendations)
 
-In some cases, ambiguities - especially involving defaults and empty vs. null scenarios - may require a patching mechanism that is more robust than simple field replacement. 
+In some cases, ambiguities - especially involving defaults and empty vs. null scenarios - may require a patching mechanism that is more robust than simple field replacement.
 
 See the [JSON Patch](https://tools.ietf.org/html/rfc6902) specification as a possible mechanism for specifying detailed and formal patch instructions for PATCH operations.
 
@@ -397,7 +397,7 @@ If-Match, If-None-Match, If-Range | String                                      
 > SME Review : When requests include an 'Accept' header, operations return representations in the requested type or an error.
 <!-- recostop -->
 
-If a request includes an HTTP `Accept` header, the operation must return a resource representation corresponding to a type presented in that header, or return an appropriate error code.  
+If a request includes an HTTP `Accept` header, the operation must return a resource representation corresponding to a type presented in that header, or return an appropriate error code.
 
 Exceptions include the `application/x-www-form-urlencoded` and `text/plain` formats, which should be treated as if the client had requested JSON representation format.
 
@@ -499,7 +499,7 @@ A REST API which could conceivably serve browser-based clients must support CORS
 > SME Review : CRUD operations are designed using identifiers in the path; not via query parameters.
 <!-- recostop -->
 
-Query parameters should be used to limit or manipulate the grouping of items returned by a resource that returns a collection.  
+Query parameters should be used to limit or manipulate the grouping of items returned by a resource that returns a collection.
 
 Query parameters should NOT be used to indicate specific individual resources; instead, you should use URI resource paths for this purpose.
 
@@ -629,7 +629,7 @@ Link: <https://api.example.com/v1/documents?offset=0&max=50>; rel="prev"
 > Linter Rules: API.REST.STYLE.respond-with-recommended-*-codes | status-codes-in-2xx-4xx-5xx : My API responds with recommended HTTP status codes in the 2xx/4xx/5xx ranges.
 <!-- recostop -->
 
-RESTful APIs use HTTP status codes to specify the outcomes of HTTP method execution. The HTTP protocol specifies the outcome of a request execution using an integer and a message. The number is known as the _status code_ and the message as the _reason phrase_. The reason phrase is a human readable message used to clarify the outcome of the response. 
+RESTful APIs use HTTP status codes to specify the outcomes of HTTP method execution. The HTTP protocol specifies the outcome of a request execution using an integer and a message. The number is known as the _status code_ and the message as the _reason phrase_. The reason phrase is a human readable message used to clarify the outcome of the response.
 
 The HTTP protocol categorizes status codes in ranges:
 
@@ -676,7 +676,7 @@ REST APIs should generally use the status codes list below:
 
 ### Mapping HTTP Methods with Status Codes
 
-For each HTTP method, your API operations should use only status codes marked as "X"  in this table: 
+For each HTTP method, your API operations should use only status codes marked as "X"  in this table:
 
 _Note that status codes marked with a bold **`X`** are rarely used_
 
@@ -700,11 +700,11 @@ _Note that status codes marked with a bold **`X`** are rarely used_
 > SME Review: When returning empty collections, operations return '200 OK' and an 'items' field with a zero-length array.
 <!-- recostop -->
 
-The purpose of the `GET` method is to retrieve an API resource. 
+The purpose of the `GET` method is to retrieve an API resource.
 
 On success, a status code `200 OK` and a response with the content of the resource is expected, generally represented as a single object or a collection of objects.
 
-In cases where a GET operation returns an empty collection, the `200 OK` status code should be used, with a representation containing an empty  [encapsulated array](./conventions.md#returned-collections), as in the example below:
+In cases where a GET operation returns an empty collection, the `200 OK` status code should be used, with a representation containing an empty  [encapsulated array](rest-conventions.md#returned-collections), as in the example below:
 
 ```json
 {
@@ -717,11 +717,11 @@ In cases where a GET operation returns an empty collection, the `200 OK` status 
 <!-- reco API.REST.STYLE.29 -->
 <h6 id="API.REST.STYLE.29"></h6>
 
-> **Recommendation** \  
+> **Recommendation** \
 > SME Review: Requests attempting to create a sub-resource for a primary resource that is non-existent return '404 Not Found'.
 <!-- recostop -->
 
-**In CRUD-based designs**, the primary purpose of `POST` operations is to create a resource. 
+**In CRUD-based designs**, the primary purpose of `POST` operations is to create a resource.
 
 If the resource was successfully created as part of the execution, a `201 Created` status code should be returned with a reference to the resource created as described in [POST](#post).
 

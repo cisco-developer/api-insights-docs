@@ -275,7 +275,6 @@ A successful PATCH response would typically return a HTTP `200 OK` status code a
 However it is also acceptable to return `204 No Content` with no body.
 
 <br/>
-[(_INVESTIGATING_)](../introduction.md#classes-of-recommendations)
 
 In some cases, ambiguities - especially involving defaults and empty vs. null scenarios - may require a patching mechanism that is more robust than simple field replacement.
 
@@ -298,7 +297,7 @@ Any request body data accompanying a HEAD request must be ignored by the operati
 
 An API may support OPTIONS requests for scenarios such as:
 
-- Implementing [CORS](https://www.w3.org/TR/cors/) to enable secure browser-based usage of the API, see ["Securing your APIs / CORS"](./security.md#cors-support)
+- Implementing [CORS](https://www.w3.org/TR/cors/) to enable secure browser-based usage of the API
 - Providing 'discovery' capabilities per resource, primarily for clients to query/negotiate support for particular HTTP verbs and/or request/response content formats, see [RFC-2616](https://tools.ietf.org/html/rfc2616#section-9.2)
 
 Any request body data accompanying an OPTIONS request should be ignored by the operation.
@@ -450,7 +449,7 @@ Your API operations should include a unique `TrackingID` header with every respo
 
 This TrackingID is intended to identify the operation/transaction across time and space, as a key for later support and serviceability needs, including trace log analysis across multiple nodes/instances.
 
-The actual informational content of the `TrackingID` header can be opaque to the API user, but could incorporate multiple pieces of info helpful to the [support team](../products/supporting.md), including:
+The actual informational content of the `TrackingID` header can be opaque to the API user, but could incorporate multiple pieces of info helpful to the support team, including:
 
 * Processing entity identifier: to identify the operation/node/instance that handled the request (and where the corresponding trace logs would be found)
 * A globally unique transaction identifier: i.e. a UUID
@@ -487,7 +486,7 @@ Also, refer to the ["Conditional Requests"](patterns.md#conditional-requests) an
 
 #### CORS Headers
 
-A REST API which could conceivably serve browser-based clients must support CORS simple and preflight request flows and headers, see [CORS Support](./security.md#cors-support) for prescriptive guidance.
+A REST API which could conceivably serve browser-based clients must support CORS simple and preflight request flows and headers.
 
 
 ## Using Query Parameters
@@ -513,8 +512,6 @@ It is possible to filter a collection on several attributes at the same time, an
 
 - Example with multiple filters: `GET /users?lastName=Doe&firstName=Jane`
 - Example with a repeated attribute: `GET /users?id=234&id=643&id=877`
-
-Check the [Advanced Querying](./patterns.md#advanced-querying) section for querying best practices that go beyond simple filtering.
 
 ### Sorting
 
@@ -547,8 +544,6 @@ An `order` parameter m  ay indicate the ascending/descending order of the sortin
 ```
 GET /documents?sort=publishedDate&order=desc
 ```
-
-For querying requirements that go beyond simple sort, see the [Query Syntax](./patterns.md#query-syntax-use-cases) section.
 
 ### Pagination
 
@@ -727,7 +722,7 @@ If the resource was successfully created as part of the execution, a `201 Create
 
 If if an operation attempts to create a sub-resource for a primary resource that is non-existent, `404 Not Found` is the appropriate status code response.
 
-**When invoking functional resources**, `200 OK` status code is generally the appropriate status code for successful execution of 'POST' operations. see [Extending CRUD with Functional Resources](./designing.md#extending-crud-with-functional-resources) for more details.
+**When invoking functional resources**, `200 OK` status code is generally the appropriate status code for successful execution of 'POST' operations.
 
 ### PUT Responses
 

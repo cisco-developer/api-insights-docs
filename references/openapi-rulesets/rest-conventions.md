@@ -69,9 +69,9 @@ POST /users/{id}/subscriptions
 > SME Review: Functional resources use a verb-noun or verb pattern, and expose POST operations.
 <!-- recostop -->
 
-Functional resources generally expose a POST operation, with a naming pattern in the form of `verb-noun` or sometimes just `verb`. This makes it easy for the developer to understand it is a functional resource, rather than a resource collection that often follows the pluralized noun format (e.g. projects, accounts, customers). 
+Functional resources generally expose a POST operation, with a naming pattern in the form of `verb-noun` or sometimes just `verb`. This makes it easy for the developer to understand it is a functional resource, rather than a resource collection that often follows the pluralized noun format (e.g. projects, accounts, customers).
 
-### Capitalization 
+### Capitalization
 
 <!-- reco API.REST.CONVENTIONS.04 -->
 <h6 id="API.REST.CONVENTIONS.04"></h6>
@@ -83,7 +83,7 @@ Functional resources generally expose a POST operation, with a naming pattern in
 For capitalization, your API should be using _lowerCamelCase_ unless a convention has already been established for a published pre-existing API. You should capitalize with lowerCamelCase as many REST artefacts as possible, including paths, resources, representations.
 
 Examples :
-- [/resourceGroups](https://developer.webex.com/docs/api/v1/resource-groups/list-resource-groups) 
+- [/resourceGroups](https://developer.webex.com/docs/api/v1/resource-groups/list-resource-groups)
 
 Acronyms should not be ALLCAPS and instead follow the lowerCamelCase conventions. As an example, if 'URL' is used in a resource name, the resource path should be named as `publicUrl`.
 
@@ -99,21 +99,21 @@ As recommended above, your API should be using 'lowerCamelCase' as much as possi
 
 When documenting your API, you should use the exact same naming conventions used in your API design. Doing so, developers should expect requests to fail when incorrect casing is specified for paths or fields. Typically, your developer audience should expect an operation defined and documented as `GET /peopleCount` to return a '404 Not Found' if invoked as `GET /peoplecount`.
 
-It is left to you as the API provider to opt for a permissive implementation or not. 
-An example of a permissive implementation would support both /peopleCount and /peoplecount paths in the example above. 
+It is left to you as the API provider to opt for a permissive implementation or not.
+An example of a permissive implementation would support both /peopleCount and /peoplecount paths in the example above.
 Though the general practice would be to provide a not permissive implementation, and return a 404 if the requested path does not match the exact casing defined and documented for an API resource.
 
 If you end up opting for a permissive implementation (aka supporting case-insensitive paths), we recommend to rewrite internally resource path via the routing service of your API rather then redirecting the consumer via a '302 Found' status code.
 
-### Inclusive and Bias-Free Naming 
+### Inclusive and Bias-Free Naming
 
-Your API design, documentation, and implementation must use bias-free and inclusive language where customer-facing, and we encourage careful consideration of language choice in source code also. Specifically, eliminate the use of "master/slave" and "whitelist/blacklist." Refer to the [API Documentation Inclusive and Bias-free Language section](../products/documenting.md#inclusive-and-bias-free-language) for guidance on replacements and alternatives.
+Your API design, documentation, and implementation must use bias-free and inclusive language where customer-facing, and we encourage careful consideration of language choice in source code also. Specifically, eliminate the use of "master/slave" and "whitelist/blacklist."
 
 ## REST Representations
 
 ### Encoding
 
-The format of representations used in request/responses should be based on established industry or domain standards. For example, RESTCONF defines a standard for Network Devices based on YANG. Check [Networking Fundamentals](../devices/fundamentals.md) for prescriptive guidance regarding RESTCONF.
+The format of representations used in request/responses should be based on established industry or domain standards. For example, RESTCONF defines a standard for Network Devices based on YANG.
 
 When such standards do not exist, your API should pick among generic structured format such as JSON, YAML or XML.
 
@@ -141,7 +141,7 @@ If this qualification is absent, it is assumed that the entity data is encoded a
 
 **API operations should not return the result as an execution status in the response payloads**
 
-The success or failure of an API request should be reflected in the [HTTP status code](#http-status-code) of the response. In case of error, the response representation should provide additional details about the nature of the failure, as detailed in the [Error Handling](./patterns.md#error-handling) section in REST Patterns.
+The success or failure of an API request should be reflected in the [HTTP status code](#http-status-code) of the response. In case of error, the response representation should provide additional details about the nature of the failure.
 
 ### Returned Collections
 
@@ -173,7 +173,7 @@ When responding with a collection of objects, operations should return an array 
 
 _Note that using an encapsulated array is a pattern which brings extra flexibility to the design of APIs, with the possibility to support capabilities such as providing a count of the returned objects or returning a list of not found items in a query._
 
-APIs should return 'full' representations for singleton or collection responses by default, or may provide clients with the ability to request 'summary' representations including only key fields as a performance optimization for larger collections. See [Partial retrieval](./patterns.md#partial-retrieval) in the REST patterns section for further guidance.
+APIs should return 'full' representations for singleton or collection responses by default, or may provide clients with the ability to request 'summary' representations including only key fields as a performance optimization for larger collections.
 
 ### Representation Fields
 
@@ -185,7 +185,7 @@ APIs should return 'full' representations for singleton or collection responses 
 <!-- recostop -->
 
 
-The general recommendation - detailled in the [Designing REST APIs](./designing.md#representation-fields) section - to use lowerCamelCase for capitalization also applies to the fields of your API operations representations.
+The general recommendation to use lowerCamelCase for capitalization also applies to the fields of your API operations representations.
 
 When naming representation fields:
 
@@ -194,7 +194,6 @@ When naming representation fields:
   *  Choose meaningful and succinct names
   *  Don't reuse any names reserved for other purposes
   *  Avoid internal naming conflicts, e.g. reusing names for dissimilar purposes
-  *  [(_INVESTIGATING_)](../introduction.md#classes-of-recommendations)
  Follow [SCIM Schema](http://www.simplecloud.info/specs/draft-scim-core-schema-01.html) naming conventions when a field represents data from a directory system
 
 <!-- reco API.REST.CONVENTIONS.09 -->
@@ -231,11 +230,11 @@ Example:
 
 
 
-### Data Types 
+### Data Types
 
-Representations for CRUD-based API Resources must include identifiers, generally as an `id` field. 
+Representations for CRUD-based API Resources must include identifiers, generally as an `id` field.
 
-Identifiers should be advertised to consumers as opaque, and should not be predictable or associated with the data itself, as detailled in [Constructing resource identifiers](./designing.md#API.REST.DESIGN.02).
+Identifiers should be advertised to consumers as opaque, and should not be predictable or associated with the data itself.
 
 <!-- reco API.REST.CONVENTIONS.10 -->
 <h6 id="API.REST.CONVENTIONS.10"></h6>
@@ -281,4 +280,4 @@ Duration fields should be represented as integer whole seconds
 Hypermedia-powered APIs have long been considered by many in the industry as being the way to implement data linkages across multiple resources or APIs, with identifiers to related data items implemented as links rather than as a simple surrogate or canonical identifier.
 
 However, doing so cohesively across an organization demands a (rare) singularity of purpose.
-Moreover, there are times when including rather than linking to data for the purposes of efficiency is desirable. 
+Moreover, there are times when including rather than linking to data for the purposes of efficiency is desirable.

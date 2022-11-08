@@ -40,7 +40,7 @@ To run all of the API Insights analyzers on a local spec file, run the following
 `api-insights-cli analyze [filepath]`
 ```
 
-To run only a specific analyzer on a local spec file, add the flag `--analyzer` followed by one of the following (NOTE: drift is visible if optional APIClarity is configured):
+To run only a specific analyzer on a local spec file, add the flag `--analyzer` followed by one of the following. Note that in order to use `drift`, you must configure APIClarity.
 
 * `guidelines`
 * `completeness`
@@ -49,7 +49,7 @@ To run only a specific analyzer on a local spec file, add the flag `--analyzer` 
 
 API Insights returns the analysis report as output in your console. The final score summary at the end of the report looks like the following:
 
-```
+```shell
   #  SEVERITY  CODE  FINDINGS  RECOMMENDATION  AFFECTED ITEMS
 0 Findings (0 Error, 0 Warning, 0 Info, 0 Hint)
 
@@ -63,31 +63,31 @@ API Insights returns the analysis report as output in your console. The final sc
 API Score: 90
 ```
 
-By default, the spec fails the analysis if its score is **0**. To set the score that should be considered "failing", add the tag `--fail-below-score` followed by the integer score.
+By default, a spec file fails an analyzer with a score of **0**. To configure the score that should be considered "failing", add the tag `--fail-below-score`, followed by the desired cutoff score value as an integer.
 
-## How to Compare Two OAS Files
+## How to Compare Two OAS Spec Files
 
 If you have an API Insights remote service with at least one API spec on it, you can use the API Insights CLI to compare a local version of that spec to one of the versions on the remote service.
 
-To compare a local spec file to the **latest version** that is currently on the remote service, run the following:
+* To compare a local spec file to the **latest version** that is currently on the remote service, run the following:
 
-```
-api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --latest
-```
+  ```shell
+  api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --latest
+  ```
 
-To compare a local spec file to a **specific version** of the spec on the remote service, run the following:
+* To compare a local spec file to a **specific version** of the spec on the remote service, run the following:
 
-```
-apregistryctl diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING
-```
+  ```shell
+  apregistryctl diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING
+  ```
 
-To compare a local spec file to a specific version and revision of the spec on the remote service, run the following:
+* To compare a local spec file to a specific version and revision of the spec on the remote service, run the following:
 
-```
-api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING --revision REVISION_STRING
-```
+  ```shell
+  api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING --revision REVISION_STRING
+  ```
 
-To set any of these diff analyses to fail if they detect changes that break backwards compatibility, add the **--fail-on-incompatible** flag to the command.
+To set any of these diff analyses to fail if they detect changes that break backwards compatibility, add the **--fail-on-incompatible** flag to any of these commands.
 
 ### SEE ALSO
 

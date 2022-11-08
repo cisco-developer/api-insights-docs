@@ -1,10 +1,10 @@
-# Set Up API Insights in a CI/CD Pipeline 
+# Setting Up API Insights in a CI/CD Pipeline 
 
-You can configure API Insights to run as part of your GitHub CI/CD pipeline.
+The instructions in this section walk you through configuring API Insights to run as part of your GitHub CI/CD pipeline. When you commit a new version of your spec file to your repository with an appropriate release tag, the API Insights analyzers run as GitHub actions. The results of the analysis, along with the spec file itself, are then uploaded to the API Insights remote service.
 
 ## Creating the Config File
 
-To get started, create an `api-insights.yaml` file in your repository's `.github/workflows` directory. This file contains the environment variables which API Insights uses, as well as the logic for its analyzers. You can use the following sample YAML file to get started:
+To get started, create an `api-insights.yaml` file in your repository's `.github/workflows` directory. This file contains the environment variables which API Insights uses, as well as the logic for its analyzers. You can use the following sample YAML file to get started, and customize its `run` commands to suit your needs:
 
 ```yaml
 name: API Insights
@@ -17,16 +17,13 @@ on:
 
 env:
   API_INSIGHTS_CLI_VERSION: latest
-  API_INSIGHTS_OAUTH2_TOKEN_URL: YOUR_OAUTH_TOKEN_URL
-  API_INSIGHTS_OAUTH2_CLIENT_ID: YOUR_CLIENT_ID
-  API_INSIGHTS_OAUTH2_CLIENT_SECRET: ${{ secrets.API_INSIGHTS_OAUTH2_CLIENT_SECRET }}
   RELEASE_REVISON: 10
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # analyze API spec files
-  # by default, it fails if there is any findings in error severity.
-  # additionally, `--fail-below-score int` could be used to fail this step with specified minimal target score.
+  # by default, the analysis fails if any issues are found that have the "Error" severity category
+  # You can also use `--fail-below-score int` to cause analyzers to fail with the specified minimal target score.
   analyze:
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +36,7 @@ jobs:
           version: ${{ env.API_INSIGHTS_CLI_VERSION }}
       - name: API Insights - Analyze API Spec
         run: |
-          api-insights-cli analyze ${{ env.API_SPEC }} --fail-below-score 80 --host ${{ env.API_INSIGHTS_HOST }} --base-path ${{ env.API_INSIGHTS_BASE_PATH }} --auth-type ${{ env.API_INSIGHTS_AUTH_TYPE }} --oauth2-grant-type ${{ env.API_INSIGHTS_OAUTH2_GRANT_TYPE }} --oauth2-token-url ${{ env.API_INSIGHTS_OAUTH2_TOKEN_URL }} --oauth2-client-id ${{ env.API_INSIGHTS_OAUTH2_CLIENT_ID }} --oauth2-client-secret ${{ env.API_INSIGHTS_OAUTH2_CLIENT_SECRET }}
+          api-insights-cli analyze ${{ env.API_SPEC }} --fail-below-score 80 --host ${{ env.API_INSIGHTS_HOST }} --base-path ${{ env.API_INSIGHTS_BASE_PATH }}
   diff:
     runs-on: ubuntu-latest
     steps:
@@ -52,7 +49,7 @@ jobs:
           version: ${{ env.API_INSIGHTS_CLI_VERSION }}
       - name: API Insights - Diff API SPec
         run: |
-          api-insights-cli diff ${{ env.API_SPEC }} -s ${{ env.API_INSIGHTS_SERVICE }} --latest --fail-on-incompatible --host ${{ env.API_INSIGHTS_HOST }} --base-path ${{ env.API_INSIGHTS_BASE_PATH }} --auth-type ${{ env.API_INSIGHTS_AUTH_TYPE }} --oauth2-grant-type ${{ env.API_INSIGHTS_OAUTH2_GRANT_TYPE }} --oauth2-token-url ${{ env.API_INSIGHTS_OAUTH2_TOKEN_URL }} --oauth2-client-id ${{ env.API_INSIGHTS_OAUTH2_CLIENT_ID }} --oauth2-client-secret ${{ env.API_INSIGHTS_OAUTH2_CLIENT_SECRET }}
+          api-insights-cli diff ${{ env.API_SPEC }} -s ${{ env.API_INSIGHTS_SERVICE }} --latest --fail-on-incompatible --host ${{ env.API_INSIGHTS_HOST }} --base-path ${{ env.API_INSIGHTS_BASE_PATH }}
   upload:
     # Use `needs` to define prerequisite jobs, e.g. only upload when step `analyze` and `diff` is successful.
     # needs: [ analyze, diff]
@@ -83,20 +80,12 @@ jobs:
         run: echo "RELEASE_REVISON=${{steps.parse-tags.outputs.revision}}" >> $GITHUB_ENV
       - name: API Insights - Upload API SPec
         run: |
-          api-insights-cli service uploadspec ${{ env.API_SPEC }} -s ${{ env.API_INSIGHTS_SERVICE }} --revision ${{ env.RELEASE_REVISON }} --host ${{ env.API_INSIGHTS_HOST }} --base-path ${{ env.API_INSIGHTS_BASE_PATH }} --auth-type ${{ env.API_INSIGHTS_AUTH_TYPE }} --oauth2-grant-type ${{ env.API_INSIGHTS_OAUTH2_GRANT_TYPE }} --oauth2-token-url ${{ env.API_INSIGHTS_OAUTH2_TOKEN_URL }} --oauth2-client-id ${{ env.API_INSIGHTS_OAUTH2_CLIENT_ID }} --oauth2-client-secret ${{ env.API_INSIGHTS_OAUTH2_CLIENT_SECRET }}
+          api-insights-cli service uploadspec ${{ env.API_SPEC }} -s ${{ env.API_INSIGHTS_SERVICE }} --revision ${{ env.RELEASE_REVISON }} --host ${{ env.API_INSIGHTS_HOST }} --base-path ${{ env.API_INSIGHTS_BASE_PATH }}
 ```
 
 The `on` section of the YAML file indicates that the API Insights actions should run when a new version of the API spec file is released.
 
-The `env` section contains important environment variables which you must define. The following shows these variables, and some example values:
-
-```yaml
-  API_INSIGHTS_CLI_VERSION: latest
-  API_INSIGHTS_OAUTH2_TOKEN_URL: YOUR_OAUTH_TOKEN_URL
-  API_INSIGHTS_OAUTH2_CLIENT_ID: YOUR_CLIENT_ID
-  API_INSIGHTS_OAUTH2_CLIENT_SECRET: ${{ secrets.API_INSIGHTS_OAUTH2_CLIENT_SECRET }}
-  RELEASE_REVISON: 10
-```
+The `env` section contains important environment variables which you must define.
 
 The `jobs` section defines three GitHub actions, **Upload**, **Diff**, and **Analyze**, which run API Insights CLI commands.
 
@@ -108,4 +97,8 @@ For more information about the CLI commands that these actions execute, see the 
 
 ## Triggering the API Insights CI/CD Pipeline
 
-To trigger the pipeline, use the "Create a New Release" link in GitHub to create a new release. Create a new tag for the release with the version number in the format `vX.Y.Z-rev` where `X.Y.Z` is the version number and `rev` is a descriptor for the release, such as `beta0`. API Insights parses the version tag and displays the version number and descriptor in the API Insights dashboard.
+To trigger the pipeline, do the following:
+1. Commit a new version of your spec file to the repository.
+1. Use the "Create a New Release" link in GitHub to create a new release.
+1. Create a new tag for the release with the version number in the format `v*.*.*-rev` where the asterisks `*` are the version number and `rev` is a descriptor for the release, such as `beta0`. API Insights parses the version tag and displays the version number and descriptor in the API Insights dashboard.
+1. Check the API Insights dashboard to find the spec file and its analysis information.

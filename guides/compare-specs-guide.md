@@ -1,4 +1,4 @@
-## Compare Specification Files Across Versions
+## Comparing Specification Files Across Versions
 
 From the API Insights dashboard, you can compare two versions of a specification file that has already been uploaded to the service:
 

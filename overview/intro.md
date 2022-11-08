@@ -42,6 +42,7 @@ API Insights stores its analysis information remotely and presents its data thro
 Although the API Insights workflow contains multiple entry points, the overall flow looks something like the following:
 
 1. Author your API spec file locally.
+
 1. **To analyze and iterate on your API spec file locally**, use either the [API Insights extension](../guides/vscode-extension.md) for Visual Studio Code or the [API Insights local CLI](../references/clidocs/apiregistryctl.md) to run the API Insights analyzers and view the output report. You can then modify your file and re-run the analyzers to improve your scores. Note that using this method does not upload your spec file or analysis data to the API Insights service for others to view. For more information, see [API Insights CLI (api-insights-cli) Overview](/references/clidocs/cli-getting-started.md) and [Using the API Insights Extension for Visual Studio Code](/guides/vscode-extension.md)
 1. **To upload your spec file to the API Insights service**, trigger the analyzers, and present the resulting analysis data in the API Insights dashboard UI, do one of the following:
    1. Upload your spec file directly in the API Insights dashboard UI.

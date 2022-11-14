@@ -1,8 +1,9 @@
 # Getting Started with an API Insights Service
 
-To get started with API Insights, install its service, which allows you and others to store and view Swagger or OpenAPI spec files and their associated analysis data remotely.
+To get started with API Insights, install its service, which allows you and others to upload and analyze OpenAPI spec files and view their analysis data remotely.
 
 ## Prerequisites
+
 Install and configure the following tools:
 * [Kubernetes](https://kubernetes.io/)
 * [kuebctl](https://kubernetes.io/docs/reference/kubectl/)
@@ -17,7 +18,7 @@ Install and configure the following tools:
    helm repo add api-insights https://ciscodevnet.github.io/api-insights-helm-charts/
    ```
 
-1. Run the following to deploy the API Insights UI and service in the `api-insights` namespace with Helm:
+1. Run the following to deploy the API Insights dashboard UI and remote service in the `api-insights` namespace with Helm:
    ```shell
    helm install api-insights api-insights/api-insights -n api-insights --create-namespace
    ```

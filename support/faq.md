@@ -28,7 +28,7 @@ Visit the [APIClarity Official site](https://apiclarity.io) to get more details.
 
 ### Q: How can I integrate API Insights into my CI/CD pipeline?
 
-To integrate API Insights into your GitHub CI/CD pipeline, see [Set Up API Insights in a CI/CD Pipeline](/guides/cicd-setup-guide.md).
+**A:** To integrate API Insights into your GitHub CI/CD pipeline, see [Set Up API Insights in a CI/CD Pipeline](/guides/cicd-setup-guide.md).
 
 ### Q: Can I use API Insights in a different CI/CD platform?
 

@@ -1,14 +1,17 @@
 # Setting Up API Insights in a CI/CD Pipeline 
 
-The instructions in this section walk you through configuring API Insights to run as part of your GitHub CI/CD pipeline. When you commit a new version of your spec file to your repository with an appropriate release tag, the API Insights analyzers run as GitHub actions. The results of the analysis, along with the spec file itself, are then uploaded to the API Insights remote service.
+The instructions in this section walk you through configuring API Insights to run as part of your GitHub CI/CD pipeline. The configuration shown in this section executes API Insights CLI commands as GitHub actions in response to the creation of user-defined release tags. The CLI commands run the API Insights analyzers, and the results of these analyses, along with the spec file itself, are uploaded to the API Insights remote service.
+
+Although these instructions are specific to GitHub, you can adapt them to other CI/CD platforms as long as those platforms support the ability to run CLI commands in response to new or changed spec files, as described in this section.
 
 ## Creating the Config File
 
-To get started, create an `api-insights.yaml` file in your repository's `.github/workflows` directory. This file contains the environment variables which API Insights uses, as well as the logic for its analyzers. You can use the following sample YAML file to get started, and customize its `run` commands to suit your needs:
+To get started, create an `api-insights.yaml` file in your repository's `.github/workflows` directory. This file contains the environment variables which API Insights uses, as well as the API Insights CLI commands that call the analyzers. You can use the following sample YAML file to get started, and customize its `run` commands to suit your needs:
 
 ```yaml
 name: API Insights
 
+# This section defines the release tag format which will trigger API Insights to run.
 on:
   push:
     branches:
@@ -19,12 +22,10 @@ env:
   API_INSIGHTS_CLI_VERSION: latest
   RELEASE_REVISON: 10
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# The jobs section defines the GitHub actions which should run when a new release tag is detected. Each job executes API Insights CLI commands to analyze the new or updated spec file, perform a diff analysis, and upload the results and the spec file to the service.
 jobs:
-  # analyze API spec files
-  # by default, the analysis fails if any issues are found that have the "Error" severity category
-  # You can also use `--fail-below-score int` to cause analyzers to fail with the specified minimal target score.
   analyze:
+  # By default, the analysis fails if any issues are found that have the "Error" severity category. You can also use `--fail-below-score int` to cause analyzers to fail with the specified minimal target score.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -51,7 +52,7 @@ jobs:
         run: |
           api-insights-cli diff ${{ env.API_SPEC }} -s ${{ env.API_INSIGHTS_SERVICE }} --latest --fail-on-incompatible --host ${{ env.API_INSIGHTS_HOST }} --base-path ${{ env.API_INSIGHTS_BASE_PATH }}
   upload:
-    # Use `needs` to define prerequisite jobs, e.g. only upload when step `analyze` and `diff` is successful.
+    # Use `needs` to define prerequisite jobs. For example, you can configure the upload job to run only if the `analyze` and `diff` jobs were successful.
     # needs: [ analyze, diff]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
@@ -85,13 +86,13 @@ jobs:
 
 The `on` section of the YAML file indicates that the API Insights actions should run when a new version of the API spec file is released.
 
-The `env` section contains important environment variables which you must define.
+The `env` section contains important environment variables that you must define.
 
-The `jobs` section defines three GitHub actions, **Upload**, **Diff**, and **Analyze**, which run API Insights CLI commands.
+The `jobs` section defines three GitHub actions, **Upload**, **Diff**, and **Analyze**, which run API Insights CLI commands:
 
-* The **Upload** action executes `api-insights-cli service uploadspec`.
-* The **Diff** action executes `api-insights-cli diff` to compare the latest spec file version to another specified version and generates a diff report.
-* The **Analyze** action executes `api-insights-cli analyze` to score the spec file against API guidelines, completeness, inclusive language, and security.
+* **Upload** executes `api-insights-cli service uploadspec`.
+* **Diff** executes `api-insights-cli diff` to compare the latest spec file version to another specified version and generates a diff report.
+* **Analyze** executes `api-insights-cli analyze` to score the spec file against API guidelines, completeness, inclusive language, and security.
 
 For more information about the CLI commands that these actions execute, see the (API Insights CLI Reference)[/references/clidocs/api-insights-cli.md] section.
 

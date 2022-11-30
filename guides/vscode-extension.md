@@ -9,26 +9,25 @@ API Insights is available as an extension for Visual Studio Code. The extension 
 
 ### Installing the API Insights Extension
 
-1. Choose one of these two methods to find API Insights Extension:
-    Method 1:
-    1. In Visual Studio Code, click the **Extensions** button.
-       ![The Extensions button in Visual Studio Code.](/images/extension-button.PNG)
-    2. On the Extensions panel, enter "api insights" in the search field and press **Enter**.
-       ![Search result page in VSCode](/images/extension-api-insights-in-srp.png)
-    3. In the search results, select _API Insights_.
+You can get the API Insights extension in either of the following ways.
 
-    Method 2:
-    1. Navigate to the extension on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=CiscoDeveloper.api-insights) in your browser.
-    2. Click the **Install** button to install the extension.
-    3. Click **Open Visual Studio Code**
+Through Visual Studio Code:
+1. In Visual Studio Code, click the **Extensions** button.
+   ![The Extensions button in Visual Studio Code.](/images/extension-button.PNG)
+2. In the search field, enter `api insights` and press **Enter**.
+   ![Search result page in VSCode](/images/extension-api-insights-in-srp.png)
+3. In the search results, select *API Insights* and click the  **Install** button on the extension's Details page.
 
-2. Click the **Install** button on the extension's Details page.
+Through the Visual Studio Marketplace:
+1. In your web browser, navigate to the extension on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=CiscoDeveloper.api-insights).
+2. Click the **Install** button to install the extension.
+3. Click **Open Visual Studio Code**.
 
 When the installation is complete, the extension will appear in the list of extensions as shown below, and the API Insights icon will appear in the left sidebar.
 
 ![Click on the API Insights entry in the list of extensions to open the extension UI.](/images/extension-list.PNG)
 
-Click on the API Insights icon on the left sidebar, shown below, to open the extension.
+Click on the API Insights icon on the left sidebar, shown here, to open the extension:
 
 ![The API Insights icon in the left sidebar.](/images/extension-icon.PNG)
 

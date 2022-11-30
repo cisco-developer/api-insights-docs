@@ -4,11 +4,12 @@ To get started with API Insights, install its service, which allows you and othe
 
 ## Prerequisites
 
-* Install and configure the following tools:
-  * [kubernetes](https://kubernetes.io/)
-  * [kuebctl](https://kubernetes.io/docs/reference/kubectl/)
-  * [helm](https://helm.sh/).
+Install and configure the following tools:
+* [Kubernetes](https://kubernetes.io/)
+* [kuebctl](https://kubernetes.io/docs/reference/kubectl/)
+* [helm](https://helm.sh/).
 * Install an application for managing a local Kubernetes cluster and associated tools. For example, [Rancher Desktop](https://rancherdesktop.io/) allows you to locally set up Kubernetes, `kubectl` and `helm`. Other Kubernetes setup applications include *Minikube* and *Kind*.
+* APIClarity, a key component of API Insights, performs run time traffic analysis, so you need to set up an agent to capture data from the service mesh (such as [Istio](https://istio.io/)) or API Gateway (such as [Kong](https://konghq.com/).
 
 ## Setting Up the API Insights Service
 
@@ -52,7 +53,7 @@ To get started with API Insights, install its service, which allows you and othe
 1. Click the **Upload New Spec** button to upload a spec file to the service. The following example uses the file `samples/init-spec/v0.0-rev2/catalogue.json`.
     ![upload v0.0-rev2](/images/get-started/upload-spec-v0.0-rev2.png)
 
-1. In the dashboard UI, click the **timeline** dropdown, then select a version of the spec file. API Insights displays the results of the analysis. If the UI does not display the analysis results, you may need to wait for a short itme or refresh the page in your browser.
+1. In the dashboard UI, click the **timeline** dropdown, then select a version of the spec file. API Insights displays the results of the analysis. If the UI does not display the analysis results, you may need to wait for a short time or refresh the page in your browser.
     ![v0.0-rev2 result](/images/get-started/v0.0-rev2-result.png)
 
 1. Upload another spec file to the service. The following example uses the file `samples/init-spec/v0.1-rev1/catalogue.json`. The analysis results for this file should report some rules violations.

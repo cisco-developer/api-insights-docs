@@ -18,6 +18,16 @@
           {
             "title": "Release Notes",
             "content": "overview/release-notes.md"
+          },
+          {
+            "title": "Visit the API Insights Site",
+            "content": "https://developer.cisco.com/site/api-insights/",
+            "type": "url"
+          },
+          {
+            "title": "Try a Demo of API Insights",
+            "content": "https://developer.cisco.com/api-insights-demo",
+            "type": "url"
           }
         ]
     },
@@ -111,24 +121,6 @@
           "title": "API Insights CLI",
           "content": "references/clidocs/cli-reference-config.json",
           "type": "config"
-        }
-      ]
-    },
-    {
-      "title": "Developer Resources",
-      "config": {
-        "expand": 0
-      },
-      "items": [
-        {
-          "title": "API Insights Site",
-          "content": "https://developer.cisco.com/site/api-insights/",
-          "type": "url"
-        },
-        {
-          "title": "Demo",
-          "content": "https://developer.cisco.com/api-insights-demo",
-          "type": "url"
         }
       ]
     },

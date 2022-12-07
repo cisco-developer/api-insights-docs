@@ -19,7 +19,7 @@ You can also generate API changelogs to help your API consumers and developers u
 
 As services proliferate in an organization, teams need a common place to store their versioned API spec files. The API Insights service stores multiple versions of both released and release-candidate API specification files, and generates difference (diff) reports across multiple versions and revisions of your spec files.
 
-Teams also need to work collaboratively on spec files in GitHub or other version control systems. The API Insights CLI allows you to integrate the spec file analyzers into a CICD or local commit pipeline. 
+Teams also need to work collaboratively on spec files in GitHub or other version control systems. The API Insights CLI allows you to integrate the spec file analyzers into a CI/CD or local commit pipeline. 
 
 When working across multiple teams, developers can end up with inconsistent API specifications. Inconsistencies make it difficult for API consumers to integrate services across multiple APIs. API Insights allows you to validate and score an API spec file against specific API guidelines. 
 

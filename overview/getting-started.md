@@ -6,10 +6,10 @@ To get started with API Insights, install its service, which allows you and othe
 
 Install and configure the following tools:
 * [Kubernetes](https://kubernetes.io/)
-* [kuebctl](https://kubernetes.io/docs/reference/kubectl/)
-* [helm](https://helm.sh/).
-* Install an application for managing a local Kubernetes cluster and associated tools. For example, [Rancher Desktop](https://rancherdesktop.io/) allows you to locally set up Kubernetes, `kubectl` and `helm`. Other Kubernetes setup applications include *Minikube* and *Kind*.
-* APIClarity, a key component of API Insights, performs run time traffic analysis, so you need to set up an agent to capture data from the service mesh (such as [Istio](https://istio.io/)) or API Gateway (such as [Kong](https://konghq.com/).
+* [kubectl](https://kubernetes.io/docs/reference/kubectl/)
+* [helm](https://helm.sh/)
+* Install an application for managing a local Kubernetes cluster and associated tools. For example, [Rancher Desktop](https://rancherdesktop.io/) allows you to locally set up Kubernetes, `kubectl` and `helm`. Other Kubernetes setup applications include [Minikube](https://minikube.sigs.k8s.io/) and [Kind](https://kind.sigs.k8s.io/).
+* APIClarity, a key component of API Insights, performs runtime traffic analysis, so you need to set up an agent to capture data from the service mesh (such as [Istio](https://istio.io/)) or API Gateway (such as [Kong](https://konghq.com/)).
 
 ## Setting Up the API Insights Service
 
@@ -27,8 +27,6 @@ Install and configure the following tools:
    ```shell
    kubectl wait --for=condition=ready pods --all --timeout=300s -n api-insights
    ```
-
-> **NOTE:** Because the API Insights service code is being migrated to public GitHub and the Helm charts may not be updated to work with the latest version, you may receive a timeout error.
 
 1. Run the following to expose the API Insights UI and service ports:
    ```shell

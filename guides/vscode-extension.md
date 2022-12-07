@@ -4,6 +4,11 @@ API Insights is available as an extension for Visual Studio Code. The extension 
 
 ## Prerequisites
 * Install Visual Studio Code from [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download).
+* If you are running API Insights locally using a `helm` chart, run the following command to expose the API Insights service at `http://localhost:8081/v1/apiregistry`:
+  
+  ```
+  kubectl -n api-insights port-forward svc/api-insights 8081:80
+  ```
 
 ## Installation and Configuration
 

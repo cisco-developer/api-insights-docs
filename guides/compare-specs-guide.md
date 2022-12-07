@@ -10,7 +10,7 @@ From the API Insights dashboard, you can compare two versions of a specification
 
 You can compare specification files with the CLI as well when you have the ID values of the specification files already analyzed with the API Insights service. You can also compare a local specification file to a file already available in the API Insights service.
 
-1. Install the API Insights CLI and make sure authentication is configured properly for your API Insights service. You can install the CLI for local use or for use in your CICD pipeline, such as with GitHub Actions.
+1. Install the API Insights CLI and make sure authentication is configured properly for your API Insights service. You can install the CLI for local use or for use in your CI/CD pipeline, such as with GitHub Actions.
 2. Put a copy of your `openapi.json` specification file in the directory where you want to analyze it.
 3. To compare that local specification file with the latest version available in the API Insights service, you run this command, where `sockshop` is the name of the service you set up to track the spec files:
 

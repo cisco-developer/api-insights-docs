@@ -1,22 +1,25 @@
 # APIRegistry API Introduction 
 
-The API for API Insights, known internal to the code as `APIRegistry`, supports these use cases:
-* Checking OAS spec file for API guideline compliance. 
-* Generating a diff of two versions of API spec files.
-* Identifying non-backward compatible breaking changes.
+The API for API Insights, known internally to the code as `APIRegistry`, supports the following use cases:
+
+* Checking an OAS spec file for API guideline compliance. 
+* Generating a diff report for two versions of the same API spec file.
+* Identifying non-backwards-compatible breaking changes.
 
 # General Workflow for the API
 
-- Create a new service -> Receive service ID `434e6653-a0f3-11ec-a2db-9eaf91c11259`
-- Create a new service spec file with a revision value `("revision": "1")` -> Receive spec file revision ID `4c9c06c7-a100-11ec-93e7-ca285bf7ce4c`
-- Create a new service spec filerevision `("revision": "2" w/ revised doc)` -> `9a457aec-a101-11ec-ae2e-12664ff946ef`
-- Get all service spec files or get a specific service spec file ID
-- Create (perform) a service spec file **diff** between spec files `4c9c06c7-a100-11ec-93e7-ca285bf7ce4c` and `9a457aec-a101-11ec-ae2e-12664ff946ef`
-- Create (perform) a new service spec file **analysis** for spec file `4c9c06c7-a100-11ec-93e7-ca285bf7ce4c` using `guidelines` analyzer
+* Create a new service.
+* Create a new spec file with a specific revision value.
+* Create a new service spec filerevision `("revision": "2" w/ revised doc)` -> `9a457aec-a101-11ec-ae2e-12664ff946ef`
+* Get all service spec files or get a specific service spec file ID
+* Create (perform) a service spec file **diff** between spec files `4c9c06c7-a100-11ec-93e7-ca285bf7ce4c` and `9a457aec-a101-11ec-ae2e-12664ff946ef`
+* Create (perform) a new service spec file **analysis** for spec file `4c9c06c7-a100-11ec-93e7-ca285bf7ce4c` using `guidelines` analyzer
 
 You can use the reference documentation included here to explore the API. Some examples are included in the following section as well.
 
 ## Create a New Service
+
+Submit the following request to create a new service on the API Insights remote service.
 
 **POST /v1/apiregistry/services**
 
@@ -46,7 +49,11 @@ You can use the reference documentation included here to explore the API. Some e
 }
 ```
 
-## Create a new service spec file `("revision": "1")`
+Note the service ID given in the `id` field (in this case, `434e6653-a0f3-11ec-a2db-9eaf91c11259`).
+
+## Create a New Spec File
+
+Submit the following request to create a new spec file with a specific revision number. Here, the revision number is `1`, specified in the `revision` field.
 
 **POST /v1/apiregistry/services/434e6653-a0f3-11ec-a2db-9eaf91c11259/specs**
 

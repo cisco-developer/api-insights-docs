@@ -23,11 +23,6 @@
             "title": "Visit the API Insights Site",
             "content": "https://developer.cisco.com/site/api-insights/",
             "type": "url"
-          },
-          {
-            "title": "Try a Demo of API Insights",
-            "content": "https://developer.cisco.com/api-insights-demo",
-            "type": "url"
           }
         ]
     },
@@ -109,7 +104,7 @@
         },
         {
           "title": "API Insights API Reference",
-          "content": "https://devnet-testing.cisco.com/v1/apidocs/devnet-apiregistry.json",
+          "content": "overview/api-flow.md",
           "type": "oas",
           "config": {
             "overview": {

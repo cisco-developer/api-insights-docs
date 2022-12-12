@@ -104,7 +104,7 @@
         },
         {
           "title": "API Insights API Reference",
-          "content": "overview/api-flow.md",
+          "content": "https://devnet-testing.cisco.com/v1/apidocs/devnet-apiregistry.json",
           "type": "oas",
           "config": {
             "overview": {

@@ -1,16 +1,18 @@
 ## API Insights CLI (api-insights-cli) Overview
 
-The `api-insights-cli` command-line utility allows you to analyze and score a spec file in your local environment. The local CLI utility does not require you to start an API Insights service or interface with a Git repository.
+The `api-insights-cli` command-line utility allows you to analyze, score, and upload spec files to the API Insights service, all from your local environment. Although the local CLI utility can interact with the API Insights service and interface with Git repositories, you do not need a service or repository in order to use many of the CLI features.
 
 ## Prerequisites
 
-* The `api-insights-cli` utility itself. Download the appropriate API Insights CLI utility file for your operating system and architecture:
- https://github.com/cisco-developer/api-insights/releases
-* If running API Insight locally using helm chart, expose APIs at ```http://localhost:8081/v1/apiregistry``` using below command
-  ```
+Before you begin setting up the API Insights CLI, do the following:
+
+* If you are running API Insights locally using a Helm chart, run the following command to expose the API Insights API at `http://localhost:8081/v1/apiregistry`:
+
+  ```shell
   kubectl -n api-insights port-forward svc/api-insights 8081:80
   ```
-* A spec file in your local environment. If you do not have a local spec file on hand, you can download a sample Petstore OpenAPI 3 spec file by running the following command:
+
+* Author or download a spec file to your local environment. If you do not have a local spec file on hand, you can download a sample pet store OpenAPI 3 spec file by running the following command:
 
   ```shell
   wget https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.json
@@ -20,11 +22,11 @@ The `api-insights-cli` command-line utility allows you to analyze and score a sp
 
 ### Setting Up the CLI on Windows
 
-To run the CLI on Windows, download the `api-insights-cli` file from the appropriate source, then add the file's location to your PATH variable and run it from the command line as `api-insights-cli`.
+To run the CLI on Windows, download the `api-insights-cli` utility for Windows and your specific architecturefrom [Cisco DevNet](https://github.com/cisco-developer/api-insights/releases). Then add the file's location to your PATH variable and run it from the command line as `api-insights-cli`.
 
 ### Setting Up the CLI on MacOS
 
-To run the CLI on Mac, download the `api-insights-cli` file from the appropriate source, then do the following:
+To run the CLI on Mac, download the `api-insights-cli` utility for MacOS and your specific architecture from [Cisco DevNet](https://github.com/cisco-developer/api-insights/releases), then do the following:
 
 1. Change the file's permissions by running `chmod a+x [path to file]` where [path to file] is the path to the `api-insights-cli` file, including the filename.
 1. Add the file to your PATH variable. In MacOS versions before 10.15 (Catalina), your PATH variable is stored in either `.bashrc` or `.bash_profile`. In version 10.15 and later, the PATH variable is stored in `.zshrc` or `.zsh_profile`.
@@ -32,7 +34,7 @@ To run the CLI on Mac, download the `api-insights-cli` file from the appropriate
 >> Note Depending on you laptop's security setting, you may need to run ```xattr -d com.apple.quarantine api-insights-cli``` this command to allow new downloaded binary to be executed. 
    
 
-## How to Evaluate/Score a Local OAS File
+## How to Analyze a Local Spec File
 
 To run all of the API Insights analyzers on a local spec file, run the following:
 
@@ -63,11 +65,11 @@ API Insights returns the analysis report as output in your console. The final sc
 API Score: 90
 ```
 
-By default, a spec file fails an analyzer with a score of **0**. To configure the score that should be considered "failing", add the tag `--fail-below-score`, followed by the desired cutoff score value as an integer.
+By default, a spec file fails an analysis on a score of **0**. To configure the score that should be considered "failing", add the tag `--fail-below-score`, followed by the desired cutoff score value as an integer.
 
 ## How to Compare Two OAS Spec Files
 
-If you have an API Insights remote service with at least one API spec on it, you can use the API Insights CLI to compare a local version of that spec to one of the versions on the remote service.
+If you have set up an API Insights remote service and uploaded at least one API spec to it, you can use the API Insights CLI to compare a local version of that spec file to one of the versions on the remote service.
 
 * To compare a local spec file to the **latest version** that is currently on the remote service, run the following:
 
@@ -75,13 +77,13 @@ If you have an API Insights remote service with at least one API spec on it, you
   api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --latest
   ```
 
-* To compare a local spec file to a **specific version** of the spec on the remote service, run the following:
+* To compare a local spec file to a **specific version** of the spec file on the remote service, run the following:
 
   ```shell
   apregistryctl diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING
   ```
 
-* To compare a local spec file to a specific version and revision of the spec on the remote service, run the following:
+* To compare a local spec file to a **specific version and revision** of the spec file on the remote service, run the following:
 
   ```shell
   api-insights-cli diff LOCAL_SPEC -s REMOTE_SERVICE_ID --version VERSION_STRING --revision REVISION_STRING

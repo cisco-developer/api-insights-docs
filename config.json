@@ -51,6 +51,23 @@
       ]
     },
     {
+        "title": "API Insights CLI",
+        "config": {
+            "expand": 0
+        },
+        "items": [
+            {
+                "title": "CLI Overview",
+                "content": "/references/clidocs/cli-getting-started.md"
+            },
+            {
+                "title": "CLI Reference",
+                "content": "references/clidocs/cli-reference-config.json",
+                "type": "config"
+            }
+        ]
+    }, 
+    {
       "title": "API Insights - References",
       "config": {
         "expand": 0

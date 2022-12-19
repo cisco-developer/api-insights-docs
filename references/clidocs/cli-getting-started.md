@@ -31,7 +31,7 @@ To run the CLI on Mac, download the `api-insights-cli` utility for MacOS and you
 1. Change the file's permissions by running `chmod a+x [path to file]` where [path to file] is the path to the `api-insights-cli` file, including the filename.
 1. Add the file to your PATH variable. In MacOS versions before 10.15 (Catalina), your PATH variable is stored in either `.bashrc` or `.bash_profile`. In version 10.15 and later, the PATH variable is stored in `.zshrc` or `.zsh_profile`.
 1. Run the CLI from the command line as `api-insights-cli`.
->> Note Depending on you laptop's security setting, you may need to run ```xattr -d com.apple.quarantine api-insights-cli``` this command to allow new downloaded binary to be executed. 
+> **Note:** Depending on your laptop's security settings, you may need to run the command `xattr -d com.apple.quarantine api-insights-cli` to allow the downloaded binary to be executed.
    
 
 ## How to Analyze a Local Spec File

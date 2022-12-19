@@ -1,6 +1,10 @@
 {
     "items": [
         {
+            "title": "Getting Started with the API Insights CLI",
+            "content": "cli-getting-started.md"
+        },
+        {
             "title": "API Insights CLI (apiinsights) Overview ",
             "content": "api-insights-cli.md"
         },
